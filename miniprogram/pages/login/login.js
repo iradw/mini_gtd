@@ -7,7 +7,13 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    showLogin: false
+  },
+  onLogin(){
+    wx.switchTab({
+      url: '/pages/collect/collect'
+    })
   },
 
   onLoad: function() {
@@ -27,7 +33,8 @@ Page({
             success: res => {
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
+                userInfo: res.userInfo,
+                showLogin: true
               })
             }
           })
@@ -42,7 +49,8 @@ Page({
       this.setData({
         logged: true,
         avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo
+        userInfo: e.detail.userInfo,
+        showLogin: true
       })
     }
   },

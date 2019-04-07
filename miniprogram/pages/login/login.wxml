@@ -8,7 +8,11 @@
       class="userinfo-avatar"
       style="background-image: url({{avatarUrl}})"
     ></button>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
+
   
+  <button wx:if='{{showLogin}}'class='login' bindtap="onLogin">登录</button>
+  <text wx:else class='login'>点击头像获取权限</text>
 
 </view>
