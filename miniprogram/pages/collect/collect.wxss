@@ -1,1 +1,41 @@
-/* miniprogram/pages/collect/collect.wxss */
+page {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30rpx;
+}
+.task {
+  min-height: 80rpx;
+  line-height: 30rpx;
+  border: 1rpx solid #cdcdcd;
+  padding-left: 20rpx;
+}
+.add-task {
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.line {
+  width: 90%;
+  margin: 20rpx auto;
+  height: 1rpx;
+  background: #cdcdcd;
+}
+.move-area {
+  height: 880rpx;
+  width: 100%;
+}
+.move-area .move-task-item .task-item {
+  height: 50rpx;
+  width: 250rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  transition: height .5s;
+}
+.move-area .task-boxes {
+  width: 100rpx;
+  height: 100rpx;
+}
+.move-area .task-boxes image {
+  width: 100%;
+  height: 100%;
+}
