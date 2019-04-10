@@ -9,22 +9,8 @@ Page({
 			{
 				taskContent: '制作微信小程序',
 				tagColor: '#ff0000',
-				x: '200rpx',				//
-				y: '200rpx',				//y的范围为0-450rpx
-				open: false
-			},
-			{
-				taskContent: '学习vue框架',
-				tagColor: '#ffff00',
-				x: '100rpx',
-				y: '300rpx',
-				open: false
-			},
-			{
-				taskContent: '做网络通讯即使聊天系统',
-				tagColor: '#ff00ff',
-				x: '400rpx',
-				y: '350rpx',
+				x: '200rpx',				//x的范围为0-500rpx
+				y: '200rpx',				//y的范围为0-500rpx
 				open: false
 			}
 		],
@@ -39,21 +25,69 @@ Page({
 	},
 
 	onClickAdd(){	//点击添加按钮
-		console.log(this.data.inputTask)
+		//console.log(this.data.inputTask)
 		this.setData({
+			/*
+			 * 生成一个x~y的随机数	
+			 * Math.round(Math.random()*(y-x)+x)
+			 */
 			tasks: this.data.tasks.concat({
 				taskContent: this.data.inputTask,
 				tagColor: '#ffff00',	//颜色随机?
-				x: '150rpx',		//坐标随机?
-				y: '200rpx',
-				open: false
-			})
+				x: Math.round(Math.random()*500) + 'rpx',		//x坐标随机0-500 
+				y: Math.round(Math.random()*500) + 'rpx',		//px = rpx / 750 * wx.getSystemInfoSync().windowWidth
+				open: false										//rpx = px * 750 / wx.getSystemInfoSync().windowWidth
+			}),
+			inputTask: ''
 		})
+
 	},
+
+	onDrag(event){
+		let xrpx = event.detail.x * 750 / wx.getSystemInfoSync().windowWidth
+		let yrpx = event.detail.y * 750 / wx.getSystemInfoSync().windowWidth
+		let index = event.target.dataset.index	//拖动的标签的索引 tasks数组下表
+		let xstr = 'tasks['+index+'].x'
+		let ystr = 'tasks['+index+'].y'
+		this.setData({
+			[xstr]: xrpx + 'rpx',
+			[ystr]: yrpx + 'rpx'
+		})
+		let list = this.isInSomeBox(xrpx + 125, yrpx + 25)
+		if(list)
+			console.log(list)
+		
+			
+		
+		
+	},
+	isInSomeBox(x, y){
+		if (x > 110 && x < 210){
+			if (y > 605 && y < 705)
+				return 'c_list'
+			else if (y > 755 && y < 855)
+				return 'p_list'
+		}
+		else if (x > 325 && x < 425){
+			if (y > 605 && y < 705)
+				return 'n_list'
+			else if (y > 755 && y < 855)
+				return 'wish_list'
+		}
+		else if (x > 540 && x < 640){
+			if (y > 605 && y < 705)
+				return 'w_list'
+			else if (y > 755 && y < 855)
+				return 'r_list'
+		}
+		else
+			return null
+	},
+
 	onClickTag(event){	//点击标签
 		//console.log(event.target.dataset.index)索引值
-		let index = event.target.dataset.index
-		let open = 'tasks['+index+'].open'
+		let index = event.target.dataset.index	////拖动的标签的索引 tasks数组下表
+		let open = 'tasks['+index+'].open'	//键名
 		this.setData({
 			[open]: !(this.data.tasks[index].open)
 		})

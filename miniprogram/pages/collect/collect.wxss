@@ -31,6 +31,10 @@ page {
   white-space: pre-wrap;
   transition: height .5s;
 }
+.move-area .movable-line {
+  position: relative;
+  top: 580rpx;
+}
 .move-area .task-boxes {
   width: 100rpx;
   height: 100rpx;
@@ -38,4 +42,12 @@ page {
 .move-area .task-boxes image {
   width: 100%;
   height: 100%;
+}
+.move-area .task-boxes .list {
+  position: relative;
+  top: -15rpx;
+  left: 15rpx;
+  display: inline-block;
+  font-size: 24rpx;
+  text-align: center;
 }
