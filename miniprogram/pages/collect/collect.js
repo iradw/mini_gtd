@@ -62,8 +62,10 @@ Page({
 		],
 		selectedBox: null,	//标签选中的盒子索引
 		selectedTagToBox: null,//放在盒子上的标签的索引
-		showDialog: false,
-		dialogText: ''
+		showDialog: false,	//标签放进盒子的弹窗
+		dialogText: '',		//标签放进盒子的弹窗信息
+		showDeleteDialog: false,//标签删除的弹窗
+		deleteTaskIndex: null//要删除的标签的索引
 	},
 	onTaskInput(event){	//输入事件
 		//console.log(event.detail.value)
@@ -90,9 +92,7 @@ Page({
 		})
 
 	},
-	onClickDelete(event){
-		console.log(event.currentTarget.dataset.index)
-	},
+	
 
 	onDrag(event){
 		let xrpx = event.detail.x * 750 / wx.getSystemInfoSync().windowWidth
@@ -170,7 +170,7 @@ Page({
 
 	//弹窗点击确认
 	onDialogConfirm(event){
-		console.log(`确认: 要添加的标签索引: ${this.data.selectedTagToBox} 要加入的盒子索引: ${this.data.selectedBox}`)
+		//console.log(`确认: 要添加的标签索引: ${this.data.selectedTagToBox} 要加入的盒子索引: ${this.data.selectedBox}`)
 		this.setData({
 			showDialog: false,
 			dialogText: '',
@@ -181,10 +181,35 @@ Page({
 
 	//弹窗点击取消
 	onDialogCancel(event){
-		console.log('取消',event)
 		this.setData({
 			showDialog: false,
 			dialogText: ''
+		})
+	},
+
+	//点击删除按钮
+	onClickDelete(event){
+		console.log(event.currentTarget.dataset.index)
+		this.setData({
+			showDeleteDialog: true,
+			deleteTaskIndex: event.currentTarget.dataset.index	//获取要删除的标签索引
+		})
+		
+	},
+	//删除弹窗点击确认
+	onDeleteConfirm(event){
+		let tasks = this.data.tasks
+		//console.log(`删除了${this.data.deleteTaskIndex}`)
+		tasks.splice(this.data.deleteTaskIndex, 1)
+		this.setData({
+			tasks,
+			showDeleteDialog: false,
+		})
+	},
+	//删除弹窗点击取消
+	onDeleteCancel(){
+		this.setData({
+			showDeleteDialog: false,
 		})
 	},
 

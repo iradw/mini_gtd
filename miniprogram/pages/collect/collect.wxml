@@ -8,7 +8,11 @@
             bindtouchend="onTouchEnd" data-index='{{index}}'>
             <view class="task-item" bindtap="onClickTag"
              style="background: {{item.tagColor}}; height: {{item.open?'250rpx':'50rpx'}}; white-space: {{item.open?'normal':'nowrap'}};"
-             data-index='{{index}}'>{{item.taskContent}}<view class="icon-delete" data-index="{{index}}" catchtap="onClickDelete"><i-icon type="trash" size="20"/></view></view>
+             data-index='{{index}}'>{{item.taskContent}}
+                <view class="icon-delete" data-index="{{index}}" catchtap="onClickDelete">
+                    <i-icon type="trash" size="20"/>
+                </view>
+             </view>
             
         </movable-view>
 
@@ -22,6 +26,9 @@
         <i-modal title="确认框" confirm-text="添加" cancel-text="取消" 
         bind:ok="onDialogConfirm" bind:cancel="onDialogCancel" visible="{{ showDialog }}">
             <text>{{ dialogText }}</text>
+        </i-modal>
+        <i-modal title="删除确认" confirm-text="删除" cancel-text="取消" 
+            bind:ok="onDeleteConfirm" bind:cancel="onDeleteCancel" visible="{{ showDeleteDialog }}">
         </i-modal>
     </movable-area>
 </view>
