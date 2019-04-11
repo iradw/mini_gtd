@@ -1,4 +1,5 @@
 // miniprogram/pages/collect/collect.js
+let utils = require('../../utils/utils')
 Page({
 
 	/**
@@ -14,8 +15,55 @@ Page({
 				open: false
 			}
 		],
-		inputTask: ''
-		
+		inputTask: '',	//输入框中输入的事件
+		boxes: [		//所有的盒子
+			{
+				x: '110rpx',
+				y: '605rpx',
+				boxSrc: '../../images/box.png',
+				text: '日程表',
+				id: 'c-list'
+			},
+			{
+				x: '325rpx',
+				y: '605rpx',
+				boxSrc: '../../images/box.png',
+				text: '下一步',
+				id: 'n-list'
+			},
+			{
+				x: '540rpx',
+				y: '605rpx',
+				boxSrc: '../../images/box.png',
+				text: '等待',
+				id: 'w-list'
+			},
+			{
+				x: '110rpx',
+				y: '755rpx',
+				boxSrc: '../../images/box.png',
+				text: '计划',
+				id: 'p-list'
+			},
+			{
+				x: '325rpx',
+				y: '755rpx',
+				boxSrc: '../../images/box.png',
+				text: '愿望',
+				id: 'wish-list'
+			},
+			{
+				x: '540rpx',
+				y: '755rpx',
+				boxSrc: '../../images/box.png',
+				text: '参考',
+				id: 'r-list'
+			}
+		],
+		selectedBox: null,	//标签选中的盒子索引
+		selectedTagToBox: null,//放在盒子上的标签的索引
+		showDialog: false,
+		dialogText: ''
 	},
 	onTaskInput(event){	//输入事件
 		//console.log(event.detail.value)
@@ -33,7 +81,7 @@ Page({
 			 */
 			tasks: this.data.tasks.concat({
 				taskContent: this.data.inputTask,
-				tagColor: '#ffff00',	//颜色随机?
+				tagColor: utils.randomColor(),	//颜色随机?
 				x: Math.round(Math.random()*500) + 'rpx',		//x坐标随机0-500 
 				y: Math.round(Math.random()*500) + 'rpx',		//px = rpx / 750 * wx.getSystemInfoSync().windowWidth
 				open: false										//rpx = px * 750 / wx.getSystemInfoSync().windowWidth
@@ -42,6 +90,9 @@ Page({
 		})
 
 	},
+	onClickDelete(event){
+		console.log(event.currentTarget.dataset.index)
+	},
 
 	onDrag(event){
 		let xrpx = event.detail.x * 750 / wx.getSystemInfoSync().windowWidth
@@ -49,36 +100,60 @@ Page({
 		let index = event.target.dataset.index	//拖动的标签的索引 tasks数组下表
 		let xstr = 'tasks['+index+'].x'
 		let ystr = 'tasks['+index+'].y'
-		this.setData({
+		this.setData({							//把标签位置记录
 			[xstr]: xrpx + 'rpx',
 			[ystr]: yrpx + 'rpx'
 		})
-		let list = this.isInSomeBox(xrpx + 125, yrpx + 25)
-		if(list)
-			console.log(list)
-		
+		let boxIndex = this.isInSomeBox(xrpx + 125, yrpx + 25)
+		// console.log(boxIndex)
+		if(boxIndex !== null && boxIndex !== undefined ){		//if选中了一个盒子
+			let boxSrcStr = 'boxes['+boxIndex+'].boxSrc'
+			this.setData({
+				[boxSrcStr]: '../../images/box_on.png',
+				selectedBox: boxIndex
+			})
+		}else {	//没有选中某个盒子 要恢复原来的样式
+			for(let i in this.data.boxes){
+				let boxSrcStr = 'boxes['+i+'].boxSrc'
+				this.setData({
+					[boxSrcStr]: '../../images/box.png',
+					selectedBox: null
+				})
+			}			
+		}
+	},
+	onTouchEnd(event){	//松开标签
+		let selectedBox = this.data.selectedBox				//标签选中的盒子的索引
+		if(selectedBox !== null){
+			let boxName = this.data.boxes[selectedBox].text	//标签选中的盒子的名字
+			let selectedTagToBox = event.target.dataset.index		//选中盒子的标签的索引
+			//console.log(`${event.target.dataset.index}选中了${selectedBox}号箱子`)
+			this.setData({
+				showDialog: true,
+				dialogText: `确认将把这件事放入${boxName}中`,
+				selectedTagToBox: selectedTagToBox
+			})
+		}
 			
-		
-		
 	},
 	isInSomeBox(x, y){
 		if (x > 110 && x < 210){
 			if (y > 605 && y < 705)
-				return 'c_list'
+				return 0
 			else if (y > 755 && y < 855)
-				return 'p_list'
+				return 3
 		}
 		else if (x > 325 && x < 425){
 			if (y > 605 && y < 705)
-				return 'n_list'
+				return 1
 			else if (y > 755 && y < 855)
-				return 'wish_list'
+				return 4
 		}
 		else if (x > 540 && x < 640){
 			if (y > 605 && y < 705)
-				return 'w_list'
+				return 2
 			else if (y > 755 && y < 855)
-				return 'r_list'
+				return 5
 		}
 		else
 			return null
@@ -90,6 +165,26 @@ Page({
 		let open = 'tasks['+index+'].open'	//键名
 		this.setData({
 			[open]: !(this.data.tasks[index].open)
+		})
+	},
+
+	//弹窗点击确认
+	onDialogConfirm(event){
+		console.log(`确认: 要添加的标签索引: ${this.data.selectedTagToBox} 要加入的盒子索引: ${this.data.selectedBox}`)
+		this.setData({
+			showDialog: false,
+			dialogText: '',
+			//把标签信息放到数据库中 还要移除这个标签
+		})
+		
+	},
+
+	//弹窗点击取消
+	onDialogCancel(event){
+		console.log('取消',event)
+		this.setData({
+			showDialog: false,
+			dialogText: ''
 		})
 	},
 

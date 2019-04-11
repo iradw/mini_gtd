@@ -24,12 +24,24 @@ page {
   width: 100%;
 }
 .move-area .move-task-item .task-item {
+  position: relative;
   height: 50rpx;
   width: 250rpx;
+  font-size: 30rpx;
+  line-height: 50rpx;
+  border-radius: 15rpx;
+  box-sizing: border-box;
+  padding: 0rpx 40rpx 0 15rpx;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: pre-wrap;
+  white-space: nowrap;
   transition: height .5s;
+  z-index: 10;
+}
+.move-area .move-task-item .task-item .icon-delete {
+  position: absolute;
+  top: -3rpx;
+  right: 6rpx;
 }
 .move-area .movable-line {
   position: relative;

@@ -4,35 +4,24 @@
     <view class="line"></view>
     <movable-area class="move-area">
         <movable-view wx:for='{{tasks}}' wx:key='index'  x="{{item.x}}" y="{{item.y}}"
-        direction="{{item.open?'none':'all'}}" class="move-task-item" bindchange="onDrag"  data-index='{{index}}'>
-            <view class="task-item" bindtap="onClickTag" style="background: {{item.tagColor}}; height: {{item.open?'250rpx':'50rpx'}}"
-             data-index='{{index}}'>{{item.taskContent}}</view>
-        </movable-view>
-        <view class="line movable-line"></view>
-        <movable-view class="task-boxes" x='110rpx' y='605rpx'>
-            <image src="../../images/box.png" mode="scaleToFill"/>
-            <text class="list" id="c-list">日程表</text>
-        </movable-view>
-        <movable-view class="task-boxes" x='325rpx' y='605rpx'>
-            <image src="../../images/box.png" mode="scaleToFill"/>
-            <text class="list" id="n-list">下一步</text>
-        </movable-view>
-        <movable-view class="task-boxes" x='540rpx' y='605rpx'>
-            <image src="../../images/box.png" mode="scaleToFill"/>
-            <text class="list" id="w-list">等待</text>
-        </movable-view>
-        <movable-view class="task-boxes" x='110rpx' y='755rpx'>
-            <image src="../../images/box.png" mode="scaleToFill"/>
-            <text class="list" id="p-list">计划</text>
-        </movable-view>
-        <movable-view class="task-boxes" x='325rpx' y='755rpx'>
-            <image src="../../images/box.png" mode="scaleToFill"/>
-            <text class="list" id="wish-list">愿望</text>
-        </movable-view>
-        <movable-view class="task-boxes" x='540rpx' y='755rpx'>
-            <image src="../../images/box.png" mode="scaleToFill"/>
-            <text class="list" id="r-list">参考</text>
+            direction="all" disabled='{{item.open}}' class="move-task-item" bindchange="onDrag"  
+            bindtouchend="onTouchEnd" data-index='{{index}}'>
+            <view class="task-item" bindtap="onClickTag"
+             style="background: {{item.tagColor}}; height: {{item.open?'250rpx':'50rpx'}}; white-space: {{item.open?'normal':'nowrap'}};"
+             data-index='{{index}}'>{{item.taskContent}}<view class="icon-delete" data-index="{{index}}" catchtap="onClickDelete"><i-icon type="trash" size="20"/></view></view>
+            
         </movable-view>
 
+        <view class="line movable-line"></view>
+
+        <movable-view class="task-boxes" wx:for="{{boxes}}" wx:key="index" x='{{item.x}}' y='{{item.y}}'>
+            <image src="{{item.boxSrc}}" mode="scaleToFill"/>
+            <text class="list" id="{{item.id}}">{{item.text}}</text>
+        </movable-view>
+        
+        <i-modal title="确认框" confirm-text="添加" cancel-text="取消" 
+        bind:ok="onDialogConfirm" bind:cancel="onDialogCancel" visible="{{ showDialog }}">
+            <text>{{ dialogText }}</text>
+        </i-modal>
     </movable-area>
 </view>
