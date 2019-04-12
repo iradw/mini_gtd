@@ -24,8 +24,26 @@
         </movable-view>
         
         <i-modal title="确认框" confirm-text="添加" cancel-text="取消" 
-        bind:ok="onDialogConfirm" bind:cancel="onDialogCancel" visible="{{ showDialog }}">
+        bind:ok="onDialogConfirm" bind:cancel="onDialogCancel" visible="{{ showDialog }}" >
             <text>{{ dialogText }}</text>
+            <view wx:if="{{ isShowDatePicker }}">
+                <label for="datePicker" class="label">选择日期</label>
+                <picker mode="date" bindchange="onPickDate" value="{{ pickedDate }}" class="datePicker" id="datePicker">
+                    {{pickedDate}}
+                </picker>
+            </view>
+
+            <view wx:if="{{ isShowPlanPicker }}" >
+                <label for="startDate" class="label">开始日期</label>
+                <picker mode="date" bindchange="onPickPlanStartDate" value="{{ pickedPlanStartDate }}" class="datePicker" id="startDate">
+                    {{pickedPlanStartDate}}
+                </picker>
+                <view></view>
+                <label for="endDate" class="label">结束日期</label>
+                <picker mode="date" bindchange="onPickPlanEndDate" value="{{ pickedPlanEndDate }}" class="datePicker" id="endDate">
+                    {{pickedPlanEndDate}}
+                </picker>
+            </view>
         </i-modal>
         <i-modal title="删除确认" confirm-text="删除" cancel-text="取消" 
             bind:ok="onDeleteConfirm" bind:cancel="onDeleteCancel" visible="{{ showDeleteDialog }}">

@@ -63,3 +63,13 @@ page {
   font-size: 24rpx;
   text-align: center;
 }
+.move-area .label {
+  display: inline-block;
+  margin-left: -70rpx;
+}
+.move-area .datePicker {
+  display: inline-block;
+  border: 1rpx solid #cdcdcd;
+  padding: 5rpx;
+  margin-left: 20rpx;
+}

@@ -65,7 +65,13 @@ Page({
 		showDialog: false,	//标签放进盒子的弹窗
 		dialogText: '',		//标签放进盒子的弹窗信息
 		showDeleteDialog: false,//标签删除的弹窗
-		deleteTaskIndex: null//要删除的标签的索引
+		deleteTaskIndex: null,//要删除的标签的索引
+		isShowDatePicker: false,//是否弹出日程表对话框
+		isShowPlanPicker: false,//是否弹出计划对话框
+		isInputDate: false,	//放进日程表盒子是否填写了时间
+		pickedDate: 0,		//选择的日程时间
+		pickedPlanStartDate: 0,//选择的计划开始时间
+		pickedPlanEndDate: 0	//选择的计划结束时间
 	},
 	onTaskInput(event){	//输入事件
 		//console.log(event.detail.value)
@@ -127,12 +133,28 @@ Page({
 		if(selectedBox !== null){
 			let boxName = this.data.boxes[selectedBox].text	//标签选中的盒子的名字
 			let selectedTagToBox = event.target.dataset.index		//选中盒子的标签的索引
+			if(selectedBox === 0){	//如果是日程表盒子 0
+				let today = utils.today()
+				this.setData({
+					isShowDatePicker: true,
+					pickedDate: today
+				})
+			}	
+			else if(selectedBox === 3){//如果是计划盒子 3
+				let today = utils.today()
+				this.setData({
+					isShowPlanPicker: true,
+					pickedPlanStartDate: today,
+					pickedPlanEndDate: today
+				})
+			}
 			//console.log(`${event.target.dataset.index}选中了${selectedBox}号箱子`)
 			this.setData({
 				showDialog: true,
 				dialogText: `确认将把这件事放入${boxName}中`,
 				selectedTagToBox: selectedTagToBox
 			})
+			
 		}
 			
 	},
@@ -159,7 +181,7 @@ Page({
 			return null
 	},
 
-	onClickTag(event){	//点击标签
+	onClickTag(event){	//点击标签展开
 		//console.log(event.target.dataset.index)索引值
 		let index = event.target.dataset.index	////拖动的标签的索引 tasks数组下表
 		let open = 'tasks['+index+'].open'	//键名
@@ -171,11 +193,28 @@ Page({
 	//弹窗点击确认
 	onDialogConfirm(event){
 		//console.log(`确认: 要添加的标签索引: ${this.data.selectedTagToBox} 要加入的盒子索引: ${this.data.selectedBox}`)
+		// pickedDate,		选择的日程时间
+		// pickedPlanStartDate,选择的计划开始时间
+		// pickedPlanEndDate	选择的计划结束时间
+		let tasks = this.data.tasks	//当前tasks数组
+		// 移除这个标签
+		console.log(this.data.tasks[this.data.selectedTagToBox])
+		tasks.splice(this.data.selectedTagToBox, 1)
+		
 		this.setData({
 			showDialog: false,
+			isShowDatePicker: false,
+			isShowPlanPicker: false,
 			dialogText: '',
-			//把标签信息放到数据库中 还要移除这个标签
+			tasks
 		})
+		wx.showToast({
+			title: '添加成功',
+			icon: 'success',
+			duration: 2000
+		})
+		
+
 		
 	},
 
@@ -183,13 +222,15 @@ Page({
 	onDialogCancel(event){
 		this.setData({
 			showDialog: false,
+			isShowDatePicker: false,
+			isShowPlanPicker: false,
 			dialogText: ''
 		})
 	},
 
-	//点击删除按钮
+	//点击标签上的删除按钮
 	onClickDelete(event){
-		console.log(event.currentTarget.dataset.index)
+		//console.log(event.currentTarget.dataset.index)
 		this.setData({
 			showDeleteDialog: true,
 			deleteTaskIndex: event.currentTarget.dataset.index	//获取要删除的标签索引
@@ -200,16 +241,43 @@ Page({
 	onDeleteConfirm(event){
 		let tasks = this.data.tasks
 		//console.log(`删除了${this.data.deleteTaskIndex}`)
+		//console.log(tasks[this.data.deleteTaskIndex])
 		tasks.splice(this.data.deleteTaskIndex, 1)
 		this.setData({
 			tasks,
 			showDeleteDialog: false,
+		})
+
+		wx.showToast({
+			title: '删除成功',
+			icon: 'success',
+			duration: 2000
 		})
 	},
 	//删除弹窗点击取消
 	onDeleteCancel(){
 		this.setData({
 			showDeleteDialog: false,
+		})
+	},
+	//选择日程时间
+	onPickDate(event){
+		// console.log(event.detail)
+		this.setData({
+			pickedDate: event.detail.value
+		})
+	},
+
+	//选择计划开始时间
+	onPickPlanStartDate(event){
+		this.setData({
+			pickedPlanStartDate: event.detail.value
+		})
+	},
+	//选择计划结束时间
+	onPickPlanEndDate(event){
+		this.setData({
+			pickedPlanEndDate: event.detail.value
 		})
 	},
 
@@ -224,7 +292,7 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-
+		
 	},
 
 	/**
