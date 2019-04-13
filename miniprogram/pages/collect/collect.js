@@ -60,18 +60,19 @@ Page({
 				id: 'r-list'
 			}
 		],
-		selectedBox: null,	//标签选中的盒子索引
-		selectedTagToBox: null,//放在盒子上的标签的索引
 		showDialog: false,	//标签放进盒子的弹窗
 		dialogText: '',		//标签放进盒子的弹窗信息
 		showDeleteDialog: false,//标签删除的弹窗
-		deleteTaskIndex: null,//要删除的标签的索引
 		isShowDatePicker: false,//是否弹出日程表对话框
 		isShowPlanPicker: false,//是否弹出计划对话框
-		isInputDate: false,	//放进日程表盒子是否填写了时间
 		pickedDate: 0,		//选择的日程时间
 		pickedPlanStartDate: 0,//选择的计划开始时间
 		pickedPlanEndDate: 0	//选择的计划结束时间
+	},
+	otherData: {
+		selectedBox: null,	//标签选中的盒子索引
+		selectedTagToBox: null,//放在盒子上的标签的索引
+		deleteTaskIndex: null,//要删除的标签的索引
 	},
 	onTaskInput(event){	//输入事件
 		//console.log(event.detail.value)
@@ -101,35 +102,40 @@ Page({
 	
 
 	onDrag(event){
-		let xrpx = event.detail.x * 750 / wx.getSystemInfoSync().windowWidth
+		let xrpx = event.detail.x * 750 / wx.getSystemInfoSync().windowWidth	//将拖动时的坐标px单位换成rpx单位
 		let yrpx = event.detail.y * 750 / wx.getSystemInfoSync().windowWidth
-		let index = event.target.dataset.index	//拖动的标签的索引 tasks数组下表
-		let xstr = 'tasks['+index+'].x'
-		let ystr = 'tasks['+index+'].y'
-		this.setData({							//把标签位置记录
-			[xstr]: xrpx + 'rpx',
-			[ystr]: yrpx + 'rpx'
-		})
-		let boxIndex = this.isInSomeBox(xrpx + 125, yrpx + 25)
+		//let index = event.target.dataset.index	//拖动的标签的索引 tasks数组下标
+		// let xstr = 'tasks['+index+'].x'
+		// let ystr = 'tasks['+index+'].y'
+		// this.setData({							//把标签位置记录
+		// 	[xstr]: xrpx + 'rpx',
+		// 	[ystr]: yrpx + 'rpx'
+		// })
+		let boxIndex = this.isInSomeBox(xrpx + 125, yrpx + 25)	//当前标签是否在盒子里
 		// console.log(boxIndex)
-		if(boxIndex !== null && boxIndex !== undefined ){		//if选中了一个盒子
+		if(boxIndex !== null && boxIndex !== undefined ){		//if在盒子里
 			let boxSrcStr = 'boxes['+boxIndex+'].boxSrc'
-			this.setData({
-				[boxSrcStr]: '../../images/box_on.png',
-				selectedBox: boxIndex
-			})
-		}else {	//没有选中某个盒子 要恢复原来的样式
+			if( this.otherData.selectedBox === null){
+				console.log("切换为on")
+				this.setData({
+					[boxSrcStr]: '../../images/box_on.png',
+				})
+			}
+			this.otherData.selectedBox = boxIndex				//记录选中的盒子索引
+			return
+		}else if(this.otherData.selectedBox !== null){	//标签不在盒子里 之前选中过盒子 又离开了盒子 要恢复原来的样式
+			console.log("切换为off")
 			for(let i in this.data.boxes){
 				let boxSrcStr = 'boxes['+i+'].boxSrc'
 				this.setData({
 					[boxSrcStr]: '../../images/box.png',
-					selectedBox: null
 				})
+				this.otherData.selectedBox = null	//将选中的盒子索引置空
 			}			
 		}
 	},
 	onTouchEnd(event){	//松开标签
-		let selectedBox = this.data.selectedBox				//标签选中的盒子的索引
+		let selectedBox = this.otherData.selectedBox				//标签选中的盒子的索引
 		if(selectedBox !== null){
 			let boxName = this.data.boxes[selectedBox].text	//标签选中的盒子的名字
 			let selectedTagToBox = event.target.dataset.index		//选中盒子的标签的索引
@@ -137,7 +143,9 @@ Page({
 				let today = utils.today()
 				this.setData({
 					isShowDatePicker: true,
-					pickedDate: today
+					pickedDate: today,
+					showDialog: true,
+					dialogText: `确认将把这件事放入${boxName}中`
 				})
 			}	
 			else if(selectedBox === 3){//如果是计划盒子 3
@@ -145,16 +153,19 @@ Page({
 				this.setData({
 					isShowPlanPicker: true,
 					pickedPlanStartDate: today,
-					pickedPlanEndDate: today
+					pickedPlanEndDate: today,
+					showDialog: true,
+					dialogText: `确认将把这件事放入${boxName}中`
+				})
+			}
+			else{
+				this.setData({
+					showDialog: true,
+					dialogText: `确认将把这件事放入${boxName}中`
 				})
 			}
 			//console.log(`${event.target.dataset.index}选中了${selectedBox}号箱子`)
-			this.setData({
-				showDialog: true,
-				dialogText: `确认将把这件事放入${boxName}中`,
-				selectedTagToBox: selectedTagToBox
-			})
-			
+			this.otherData.selectedTagToBox = selectedTagToBox
 		}
 			
 	},
@@ -192,14 +203,14 @@ Page({
 
 	//弹窗点击确认
 	onDialogConfirm(event){
-		//console.log(`确认: 要添加的标签索引: ${this.data.selectedTagToBox} 要加入的盒子索引: ${this.data.selectedBox}`)
+		//console.log(`确认: 要添加的标签索引: ${this.otherData.selectedTagToBox} 要加入的盒子索引: ${this.otherData.selectedBox}`)
 		// pickedDate,		选择的日程时间
 		// pickedPlanStartDate,选择的计划开始时间
 		// pickedPlanEndDate	选择的计划结束时间
 		let tasks = this.data.tasks	//当前tasks数组
 		// 移除这个标签
-		console.log(this.data.tasks[this.data.selectedTagToBox])
-		tasks.splice(this.data.selectedTagToBox, 1)
+		console.log(this.data.tasks[this.otherData.selectedTagToBox])
+		tasks.splice(this.otherData.selectedTagToBox, 1)
 		
 		this.setData({
 			showDialog: false,
@@ -213,8 +224,6 @@ Page({
 			icon: 'success',
 			duration: 2000
 		})
-		
-
 		
 	},
 
@@ -230,19 +239,19 @@ Page({
 
 	//点击标签上的删除按钮
 	onClickDelete(event){
-		//console.log(event.currentTarget.dataset.index)
+		console.log(event.currentTarget.dataset.index)
 		this.setData({
 			showDeleteDialog: true,
-			deleteTaskIndex: event.currentTarget.dataset.index	//获取要删除的标签索引
+			
 		})
+		this.otherData.deleteTaskIndex = event.currentTarget.dataset.index	//获取要删除的标签索引
 		
 	},
 	//删除弹窗点击确认
 	onDeleteConfirm(event){
 		let tasks = this.data.tasks
-		//console.log(`删除了${this.data.deleteTaskIndex}`)
-		//console.log(tasks[this.data.deleteTaskIndex])
-		tasks.splice(this.data.deleteTaskIndex, 1)
+		console.log(tasks[this.otherData.deleteTaskIndex])
+		tasks.splice(this.otherData.deleteTaskIndex, 1)
 		this.setData({
 			tasks,
 			showDeleteDialog: false,
