@@ -4,9 +4,19 @@ Page({
 	/**
 	 * 页面的初始数据
 	 */
-	data: {
-
+	data : {
+		scrollTop : 0,
+		arr: [1,2,3,4,5,6,7,8,9,10]
 	},
+	onChange(event){
+        console.log(event.detail,'click right menu callback data')
+    },
+    //页面滚动执行方式
+    onPageScroll(event){
+        this.setData({
+            scrollTop : event.scrollTop
+        })
+    },
 
 	/**
 	 * 生命周期函数--监听页面加载

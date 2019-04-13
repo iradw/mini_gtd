@@ -1,4 +1,5 @@
 // miniprogram/pages/collect/collect.js
+const app = getApp()
 let utils = require('../../utils/utils')
 Page({
 
@@ -72,7 +73,8 @@ Page({
 	otherData: {
 		selectedBox: null,	//标签选中的盒子索引
 		selectedTagToBox: null,//放在盒子上的标签的索引
-		deleteTaskIndex: null,//要删除的标签的索引
+		deleteTaskIndex: null,//要删除的标签的索引,
+		openId: ''
 	},
 	onTaskInput(event){	//输入事件
 		//console.log(event.detail.value)
@@ -97,6 +99,15 @@ Page({
 			}),
 			inputTask: ''
 		})
+		wx.cloud.callFunction({
+			name: 'collect',
+			success: function(res) {
+				//console.log(res.result.event.userInfo.openId)
+			},
+			fail: function(err) {
+				console.log(err)
+			}
+		})
 
 	},
 	
@@ -116,7 +127,6 @@ Page({
 		if(boxIndex !== null && boxIndex !== undefined ){		//if在盒子里
 			let boxSrcStr = 'boxes['+boxIndex+'].boxSrc'
 			if( this.otherData.selectedBox === null){
-				console.log("切换为on")
 				this.setData({
 					[boxSrcStr]: '../../images/box_on.png',
 				})
@@ -124,7 +134,6 @@ Page({
 			this.otherData.selectedBox = boxIndex				//记录选中的盒子索引
 			return
 		}else if(this.otherData.selectedBox !== null){	//标签不在盒子里 之前选中过盒子 又离开了盒子 要恢复原来的样式
-			console.log("切换为off")
 			for(let i in this.data.boxes){
 				let boxSrcStr = 'boxes['+i+'].boxSrc'
 				this.setData({
@@ -167,6 +176,7 @@ Page({
 			//console.log(`${event.target.dataset.index}选中了${selectedBox}号箱子`)
 			this.otherData.selectedTagToBox = selectedTagToBox
 		}
+		//console.log( app.globalData.openid)
 			
 	},
 	isInSomeBox(x, y){
@@ -224,6 +234,7 @@ Page({
 			icon: 'success',
 			duration: 2000
 		})
+		this.otherData.selectedBox = null	//将选中的箱子置空
 		
 	},
 
@@ -235,6 +246,7 @@ Page({
 			isShowPlanPicker: false,
 			dialogText: ''
 		})
+		this.otherData.selectedBox = null	//将选中的箱子置空
 	},
 
 	//点击标签上的删除按钮
