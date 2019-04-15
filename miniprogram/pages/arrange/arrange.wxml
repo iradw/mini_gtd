@@ -1,6 +1,6 @@
 
 <view class='left'>
-    <text wx:for="{{ arr }}">左侧列表{{ arr[index] }}</text>
+    <text wx:for="{{ arr }}" wx:key="index">左侧列表{{ arr[index] }}</text>
 </view>
 <view class="i-sticky-demo">
     <i-sticky scrollTop="{{scrollTop}}">

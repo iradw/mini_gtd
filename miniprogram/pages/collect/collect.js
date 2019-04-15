@@ -1,6 +1,9 @@
 // miniprogram/pages/collect/collect.js
 const app = getApp()
+
 let utils = require('../../utils/utils')
+const db = wx.cloud.database()
+const users = db.collection('users')
 Page({
 
 	/**
@@ -8,13 +11,13 @@ Page({
 	 */
 	data: {
 		tasks: [
-			{
-				taskContent: '制作微信小程序',
-				tagColor: '#ff0000',
-				x: '200rpx',				//x的范围为0-500rpx
-				y: '200rpx',				//y的范围为0-500rpx
-				open: false
-			}
+			// {
+			// 	taskContent: '制作微信小程序',
+			// 	tagColor: '#ff0000',
+			// 	x: '200rpx',				//x的范围为0-500rpx
+			// 	y: '200rpx',				//y的范围为0-500rpx
+			// 	open: false
+			// }
 		],
 		inputTask: '',	//输入框中输入的事件
 		boxes: [		//所有的盒子
@@ -99,15 +102,7 @@ Page({
 			}),
 			inputTask: ''
 		})
-		wx.cloud.callFunction({
-			name: 'collect',
-			success: function(res) {
-				//console.log(res.result.event.userInfo.openId)
-			},
-			fail: function(err) {
-				console.log(err)
-			}
-		})
+		//console.log(this.data.tasks)
 
 	},
 	
@@ -306,7 +301,44 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		wx.showLoading({
+			title: '正在加载数据',
+			mask: true
 
+		})
+		wx.cloud.callFunction({
+			name: 'collect_query',
+			data: {}
+		})
+		.then(
+			async (res) => {
+				//console.log(res.result.data)
+				let tasksFromDB = res.result.data[0].tasks
+				let tasks = []
+				console.log(tasksFromDB)
+				for(let i in tasksFromDB){
+					tasks.push({
+						taskContent: tasksFromDB[i].task,
+						tagColor: utils.randomColor(),	//颜色随机
+						x: Math.round(Math.random()*500) + 'rpx',		//x坐标随机0-500 
+						y: Math.round(Math.random()*500) + 'rpx',		//px = rpx / 750 * wx.getSystemInfoSync().windowWidth
+						open: false										//rpx = px * 750 / wx.getSystemInfoSync().windowWidth
+					})
+				}
+				//console.log(tasks)
+				await this.setData({
+					tasks
+				})
+				wx.hideLoading()
+			},
+			async (err) => {
+				wx.hideLoading()
+				wx.showToast({
+					title: '加载数据失败,请检查您的网络',
+					icon: 'none'
+				})
+			}
+		)
 	},
 
 	/**
@@ -320,7 +352,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		
 	},
 
 	/**

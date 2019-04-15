@@ -1,4 +1,5 @@
 //index.js
+// import regeneratorRuntime from ('../../lib/regenerator-runtime/runtime')
 const app = getApp()
 
 Page({
@@ -10,10 +11,13 @@ Page({
     requestResult: '',
     showLogin: false
   },
-  onLogin(){
+  otherData: {
+    openid: ''
+  },
+ onLogin(){
     this.onGetOpenid()
     wx.switchTab({
-      url: '/pages/collect/collect'
+      url: '/pages/arrange/arrange'
     })
   },
 
@@ -24,7 +28,6 @@ Page({
       })
       return
     }
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -42,6 +45,7 @@ Page({
         }
       }
     })
+
 		
   },
 
@@ -57,13 +61,16 @@ Page({
   },
 
   onGetOpenid: function() {
+
     // 调用云函数
-    wx.cloud.callFunction({
+     wx.cloud.callFunction({
       name: 'login',
       data: {},
       success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
+        //console.log('[云函数] [login] user openid: ', res.result.openid)
+        let openid =  res.result.openid
+        this.otherData = openid
+        app.globalData.openid = openid
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
