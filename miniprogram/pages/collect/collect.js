@@ -87,7 +87,24 @@ Page({
 	},
 
 	onClickAdd(){	//点击添加按钮
-		//console.log(this.data.inputTask)
+
+		//调用云函数 向数据库中添加事件
+		let currentTime = new Date().getTime()
+		wx.cloud.callFunction({
+			name: 'collect_addToInbox',
+			data: {
+				task: this.data.inputTask,
+				taskId: currentTime
+			}
+		}).then(
+			(res) => {
+				console.log(res)
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
+		// 更新界面
 		this.setData({
 			/*
 			 * 生成一个x~y的随机数	
@@ -98,21 +115,25 @@ Page({
 				tagColor: utils.randomColor(),	//颜色随机?
 				x: Math.round(Math.random()*500) + 'rpx',		//x坐标随机0-500 
 				y: Math.round(Math.random()*500) + 'rpx',		//px = rpx / 750 * wx.getSystemInfoSync().windowWidth
-				open: false										//rpx = px * 750 / wx.getSystemInfoSync().windowWidth
+				open: false,										//rpx = px * 750 / wx.getSystemInfoSync().windowWidth
+				taskId: currentTime
 			}),
 			inputTask: ''
 		})
-		//console.log(this.data.tasks)
+		
 
 	},
 	
 
 	onDrag(event){
-		let xrpx = event.detail.x * 750 / wx.getSystemInfoSync().windowWidth	//将拖动时的坐标px单位换成rpx单位
+		let xrpx = event.detail.x * 750 / wx.getSystemInfoSync().windowWidth	
+		//将拖动时的坐标px单位换成rpx单位
 		let yrpx = event.detail.y * 750 / wx.getSystemInfoSync().windowWidth
-		//let index = event.target.dataset.index	//拖动的标签的索引 tasks数组下标
-		// let xstr = 'tasks['+index+'].x'
-		// let ystr = 'tasks['+index+'].y'
+		let index = event.target.dataset.index	//拖动的标签的索引 tasks数组下标
+		let xstr = 'tasks['+index+'].x'
+		let ystr = 'tasks['+index+'].y'
+		// this.otherData.loseXY.x = xrpx + 'rpx'
+		// this.otherData.loseXY.y = yrpx + 'rpx'
 		// this.setData({							//把标签位置记录
 		// 	[xstr]: xrpx + 'rpx',
 		// 	[ystr]: yrpx + 'rpx'
@@ -123,7 +144,7 @@ Page({
 			let boxSrcStr = 'boxes['+boxIndex+'].boxSrc'
 			if( this.otherData.selectedBox === null){
 				this.setData({
-					[boxSrcStr]: '../../images/box_on.png',
+					[boxSrcStr]: '../../images/box_on.png'
 				})
 			}
 			this.otherData.selectedBox = boxIndex				//记录选中的盒子索引
@@ -132,7 +153,7 @@ Page({
 			for(let i in this.data.boxes){
 				let boxSrcStr = 'boxes['+i+'].boxSrc'
 				this.setData({
-					[boxSrcStr]: '../../images/box.png',
+					[boxSrcStr]: '../../images/box.png'
 				})
 				this.otherData.selectedBox = null	//将选中的盒子索引置空
 			}			
@@ -140,9 +161,11 @@ Page({
 	},
 	onTouchEnd(event){	//松开标签
 		let selectedBox = this.otherData.selectedBox				//标签选中的盒子的索引
+		
 		if(selectedBox !== null){
 			let boxName = this.data.boxes[selectedBox].text	//标签选中的盒子的名字
 			let selectedTagToBox = event.target.dataset.index		//选中盒子的标签的索引
+			
 			if(selectedBox === 0){	//如果是日程表盒子 0
 				let today = utils.today()
 				this.setData({
@@ -150,6 +173,7 @@ Page({
 					pickedDate: today,
 					showDialog: true,
 					dialogText: `确认将把这件事放入${boxName}中`
+					
 				})
 			}	
 			else if(selectedBox === 3){//如果是计划盒子 3
@@ -171,6 +195,7 @@ Page({
 			//console.log(`${event.target.dataset.index}选中了${selectedBox}号箱子`)
 			this.otherData.selectedTagToBox = selectedTagToBox
 		}
+
 		//console.log( app.globalData.openid)
 			
 	},
@@ -213,23 +238,62 @@ Page({
 		// pickedPlanStartDate,选择的计划开始时间
 		// pickedPlanEndDate	选择的计划结束时间
 		let tasks = this.data.tasks	//当前tasks数组
-		// 移除这个标签
-		console.log(this.data.tasks[this.otherData.selectedTagToBox])
-		tasks.splice(this.otherData.selectedTagToBox, 1)
+		let addDate = utils.formatNow()
+		console.log('时间'+addDate)
+		wx.showLoading({
+			title: '正在加载数据',
+			mask: true
+
+		})
+		//调用云函数 更新数据库
+		let prams = {
+			taskId: tasks[this.otherData.selectedTagToBox].taskId,
+			task: tasks[this.otherData.selectedTagToBox].taskContent,
+			taskIndex: this.otherData.selectedTagToBox,
+			boxIndex: this.otherData.selectedBox,
+			addDate,
+			pickedDate: this.data.pickedDate,		//选择的日程时间
+			pickedPlanStartDate:  this.data.pickedPlanStartDate,//选择的计划开始时间
+			pickedPlanEndDate:  this.data.pickedPlanEndDate,	//选择的计划结束时间
+			isFinish: false
+		}
+		wx.cloud.callFunction({
+			name: 'collect_fromInboxToOther',
+			data:{
+				prams
+			}
+		}).then(
+			(res) => {
+				tasks.splice(this.otherData.selectedTagToBox, 1)
 		
-		this.setData({
-			showDialog: false,
-			isShowDatePicker: false,
-			isShowPlanPicker: false,
-			dialogText: '',
-			tasks
-		})
-		wx.showToast({
-			title: '添加成功',
-			icon: 'success',
-			duration: 2000
-		})
-		this.otherData.selectedBox = null	//将选中的箱子置空
+				this.setData({
+					showDialog: false,
+					isShowDatePicker: false,
+					isShowPlanPicker: false,
+					dialogText: '',
+					tasks
+				})
+				wx.showToast({
+					title: '添加成功',
+					icon: 'success',
+					duration: 2000
+				})
+				let boxSrcStr = 'boxes['+this.otherData.selectedBox+'].boxSrc'	//恢复盒子的样式
+				this.setData({
+					[boxSrcStr]: '../../images/box.png',
+				})
+				
+				this.otherData.selectedBox = null	//将选中的箱子置空
+				wx.hideLoading()
+			},
+			(err) => {
+				console.log(err)
+				wx.hideLoading()
+			}
+		)
+		// 移除这个标签
+		//console.log(this.data.tasks[this.otherData.selectedTagToBox])
+		
 		
 	},
 
@@ -246,7 +310,7 @@ Page({
 
 	//点击标签上的删除按钮
 	onClickDelete(event){
-		console.log(event.currentTarget.dataset.index)
+		//console.log(event.currentTarget.dataset.index)
 		this.setData({
 			showDeleteDialog: true,
 			
@@ -256,19 +320,45 @@ Page({
 	},
 	//删除弹窗点击确认
 	onDeleteConfirm(event){
+		wx.showLoading({
+			title: '正在删除',
+			mask: true
+		})
 		let tasks = this.data.tasks
-		console.log(tasks[this.otherData.deleteTaskIndex])
-		tasks.splice(this.otherData.deleteTaskIndex, 1)
-		this.setData({
-			tasks,
-			showDeleteDialog: false,
-		})
+		//console.log(tasks[this.otherData.deleteTaskIndex])
 
-		wx.showToast({
-			title: '删除成功',
-			icon: 'success',
-			duration: 2000
-		})
+		//数据库中tasks数组各个元素的索引与页面中tasks数组索引相同 但要保证数据库成功更新才更新页面
+		wx.cloud.callFunction({
+			name: 'collect_deleteFromInbox',
+			data: {
+				deleteTaskIndex: this.otherData.deleteTaskIndex
+			}
+		}).then(
+			(res) => {
+				tasks.splice(this.otherData.deleteTaskIndex, 1)
+				this.setData({
+					tasks,
+					showDeleteDialog: false,
+				})
+				wx.hideLoading()
+				wx.showToast({
+					title: '删除成功',
+					icon: 'success',
+					duration: 2000
+				})
+			},
+			(err) => {
+				wx.hideLoading()
+				wx.showToast({
+					title: '删除失败',
+					icon: 'none',
+					duration: 2000
+				})
+			}
+		)
+
+
+		
 	},
 	//删除弹窗点击取消
 	onDeleteCancel(){
@@ -297,10 +387,8 @@ Page({
 		})
 	},
 
-	/**
-	 * 生命周期函数--监听页面加载
-	 */
-	onLoad: function (options) {
+	//从数据库获取数据
+	getData(){
 		wx.showLoading({
 			title: '正在加载数据',
 			mask: true
@@ -311,13 +399,14 @@ Page({
 			data: {}
 		})
 		.then(
-			async (res) => {
+			 (res) => {
 				//console.log(res.result.data)
 				let tasksFromDB = res.result.data[0].tasks
 				let tasks = []
-				console.log(tasksFromDB)
+				//console.log(tasksFromDB)
 				for(let i in tasksFromDB){
 					tasks.push({
+						taskId: tasksFromDB[i].taskId,
 						taskContent: tasksFromDB[i].task,
 						tagColor: utils.randomColor(),	//颜色随机
 						x: Math.round(Math.random()*500) + 'rpx',		//x坐标随机0-500 
@@ -326,12 +415,13 @@ Page({
 					})
 				}
 				//console.log(tasks)
-				await this.setData({
+				 this.setData({
 					tasks
 				})
 				wx.hideLoading()
+				console.log(this.data.tasks)
 			},
-			async (err) => {
+			 (err) => {
 				wx.hideLoading()
 				wx.showToast({
 					title: '加载数据失败,请检查您的网络',
@@ -339,6 +429,12 @@ Page({
 				})
 			}
 		)
+	},
+	/**
+	 * 生命周期函数--监听页面加载
+	 */
+	onLoad: function (options) {
+		//this.getData()
 	},
 
 	/**
@@ -352,7 +448,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		
+		this.getData()
 	},
 
 	/**

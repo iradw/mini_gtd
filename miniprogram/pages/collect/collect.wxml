@@ -5,7 +5,7 @@
     <movable-area class="move-area">
         <movable-view wx:for='{{tasks}}' wx:key='index'  x="{{item.x}}" y="{{item.y}}"
             direction="all" disabled='{{item.open}}' class="move-task-item" bindchange="onDrag"  
-            bindtouchend="onTouchEnd" data-index='{{index}}'>
+            catchtouchend="onTouchEnd" data-index='{{index}}' animation='{{false}}'>
             <view class="task-item" bindtap="onClickTag"
              style="background: {{item.tagColor}}; height: {{item.open?'250rpx':'50rpx'}}; white-space: {{item.open?'normal':'nowrap'}};"
              data-index='{{index}}'>{{item.taskContent}}

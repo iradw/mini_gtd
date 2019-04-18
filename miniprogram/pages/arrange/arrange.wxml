@@ -22,7 +22,7 @@
                 视图层
             </view>
             <view slot="content">
-                <view class="i-sticky-demo-item">注册程序</view>
+                <view class="i-sticky-demo-item"></view>
                 <view class="i-sticky-demo-item">场景值</view>
                 <view class="i-sticky-demo-item">注册页面</view>
                 <view class="i-sticky-demo-item">路由</view>

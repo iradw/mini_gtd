@@ -2,8 +2,6 @@
 	"pages": [
 		"pages/collect/collect",
 		"pages/login/login",
-		
-		
 		"pages/arrange/arrange",
 		"pages/review/review",
 		"pages/my/my",
@@ -30,7 +28,6 @@
 				"iconPath": "./images/collect.png",
 				"selectedIconPath": "/images/collect_on.png"
 			},
-			
 			{
 				"pagePath": "pages/calendar/calendar",
 				"text": "日程表",
@@ -56,5 +53,6 @@
 				"selectedIconPath": "/images/my_on.png"
 			}
 		]
-	}
+	},
+	"sitemapLocation": "sitemap.json"
 }
