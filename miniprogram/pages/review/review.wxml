@@ -1,2 +1,5 @@
-<!--miniprogram/pages/review/review.wxml-->
-<text>miniprogram/pages/review/review.wxml</text>
+<i-cell-group>
+
+    <i-cell wx:for="{{ dateList }}" wx:key="{{index}}" title="{{ item.title ? item.title : item.head+'~'+item.tail }}" is-link ></i-cell>
+    
+</i-cell-group>

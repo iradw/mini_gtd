@@ -1,1 +1,4 @@
-/* miniprogram/pages/review/review.wxss */
+page {
+  display: flex;
+  flex-direction: column;
+}

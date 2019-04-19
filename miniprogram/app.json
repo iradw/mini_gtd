@@ -1,9 +1,9 @@
 {
 	"pages": [
+		"pages/review/review",
 		"pages/collect/collect",
 		"pages/login/login",
 		"pages/arrange/arrange",
-		"pages/review/review",
 		"pages/my/my",
 		"pages/calendar/calendar"
 	],
