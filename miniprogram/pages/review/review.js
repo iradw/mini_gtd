@@ -12,8 +12,8 @@ Page({
 	},
 
 	calculateDate(startDate, endDate){
-		let startMoment = moment(startDate)
-		let endMoment = moment(endDate)
+		let startMoment = moment(startDate, "YYYY-MM-DD")
+		let endMoment = moment(endDate, "YYYY-MM-DD")
 		let weeksDiff = endMoment.diff(startMoment, "weeks")//相隔周数
 		let endDateWeek = endMoment.get('weekday')
 		let dateList = []
@@ -40,6 +40,15 @@ Page({
 		this.setData({
 			dateList
 		})
+	},
+	onClickItem(event){
+		let itemIndex = event.target.dataset.index
+		// console.log(this.data.dateList[itemIndex])
+		// let head = this.data.dateList[itemIndex]
+		let {head, tail} = this.data.dateList[itemIndex]
+		wx.navigateTo({
+			url: `./week_review/week_review?head=${head}&tail=${tail}`
+		  })
 	},
 
 	/**

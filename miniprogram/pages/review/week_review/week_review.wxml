@@ -1,0 +1,2 @@
+<view class="animated rubberBand">{{ date.head }}~{{ date.tail}}</view>
+<!-- 本周回顾(将一些列表展示) 1.收集箱, 2.日程, 3.下一步, 4.委托清单, 5.计划-->

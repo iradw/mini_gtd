@@ -5,7 +5,8 @@
 		"pages/login/login",
 		"pages/arrange/arrange",
 		"pages/my/my",
-		"pages/calendar/calendar"
+		"pages/calendar/calendar",
+		"pages/review/week_review/week_review"
 	],
 	"window": {
 		"backgroundColor": "#F6F6F6",
