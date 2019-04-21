@@ -69,7 +69,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		this.calculateDate("2019-01-1", utils.today())	//utils.today()
+		this.calculateDate("2019-01-1", utils.formatNow())	//utils.today()
 	},
 
 	/**

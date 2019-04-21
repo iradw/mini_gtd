@@ -9,7 +9,7 @@
 		"newFeature": true,
 		"nodeModules": true,
 		"autoAudits": false,
-		"uglifyFileName": true,
+		"uglifyFileName": false,
 		"checkInvalidKey": true
 	},
 	"appid": "wxc2bc45195d5bab6d",

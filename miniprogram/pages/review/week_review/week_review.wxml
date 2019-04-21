@@ -1,2 +1,56 @@
-<view class="animated rubberBand">{{ date.head }}~{{ date.tail}}</view>
 <!-- 本周回顾(将一些列表展示) 1.收集箱, 2.日程, 3.下一步, 4.委托清单, 5.计划-->
+<view class="date-area">
+    <text class="date">{{ date.head}}~{{ date.tail}}</text>
+</view>
+<view class="tasks-list-area animated {{listNameAction}}" >{{currentListName}}</view>
+<view class="animation-area animated {{listAction}}">
+    <view class="calendar-list" hidden="{{currentList === 1 ? false : true}}">
+        <block wx:for="{{calendarTasks}}" wx:key="{{index}}" >
+            <i-card title="{{item.date}}" extra="{{item.isFinish ? '已完成' : '未完成'}}"  full="{{true}}">
+            <view slot="content">{{item.task}}</view>
+            <view slot="footer">添加日期:{{item.addDate}}</view>
+            </i-card>
+        </block>
+    </view>
+
+    <view class="next-list" hidden="{{currentList === 2 ? false : true}}">
+        <block wx:for="{{nextTasks}}" wx:key="{{index}}">
+            <i-card title="{{item.task}}" extra="{{item.isFinish ? '已完成' : '未完成'}}"  full="{{true}}">
+            <view slot="footer">添加日期:{{item.addDate}}</view>
+            <view slot="footer" hidden="item.isFinish">完成日期:{{item.finishDate}}</view>
+            </i-card>
+        </block>
+    </view>
+
+    <view class="delegation-list" hidden="{{currentList === 3 ? false : true}}">
+        <block wx:for="{{delegationTasks}}" wx:key="{{index}}">
+            <i-card title="{{item.task}}" extra="{{item.isFinish ? '已完成' : '未完成'}}"  full="{{true}}">
+            <view slot="footer">添加日期:{{item.addDate}}</view>
+            <view slot="footer" hidden="item.isFinish">完成日期:{{item.finishDate}}</view>
+            </i-card>
+        </block>
+    </view>
+
+    <view class="plan-list" hidden="{{currentList === 4 ? false : true}}">
+        <block wx:for="{{planTasks}}" wx:key="{{index}}">
+            <i-card title="{{item.startDate}}~{{item.endDate}}" extra="{{item.isFinish ? '已完成' : '未完成'}}"  full="{{true}}">
+            <view slot="content">{{item.task}}</view>
+            <block wx:for="{{item.taskSteps}}" wx:for-index="stepIndex" wx:for-item="stepItem" wx:key="{{stepIndex}}">
+                <view slot="footer" >{{stepItem.step}}</view>
+            </block>
+            
+            </i-card>
+        </block>
+    </view>
+
+</view>
+<i-page current="{{ currentPage }}" total="4" bind:change="handleChange" i-class="paging-area">
+    <view slot="prev">
+        <i-icon type="return"></i-icon>
+        上一步
+    </view>
+    <view slot="next">
+        下一步
+        <i-icon type="enter"></i-icon>
+    </view>
+</i-page>

@@ -1,8 +1,8 @@
 {
 	"pages": [
+		"pages/login/login",
 		"pages/review/review",
 		"pages/collect/collect",
-		"pages/login/login",
 		"pages/arrange/arrange",
 		"pages/my/my",
 		"pages/calendar/calendar",

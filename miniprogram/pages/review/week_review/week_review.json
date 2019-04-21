@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "i-page": "../../../lib/iview/page/index",
+    "i-card": "../../../lib/iview/card/index"
+  }
 }

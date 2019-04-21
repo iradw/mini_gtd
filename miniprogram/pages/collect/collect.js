@@ -167,7 +167,7 @@ Page({
 			let selectedTagToBox = event.target.dataset.index		//选中盒子的标签的索引
 			
 			if(selectedBox === 0){	//如果是日程表盒子 0
-				let today = utils.today()
+				let today = utils.formatNow()
 				this.setData({
 					isShowDatePicker: true,
 					pickedDate: today,
@@ -177,7 +177,7 @@ Page({
 				})
 			}	
 			else if(selectedBox === 3){//如果是计划盒子 3
-				let today = utils.today()
+				let today = utils.formatNow()
 				this.setData({
 					isShowPlanPicker: true,
 					pickedPlanStartDate: today,
