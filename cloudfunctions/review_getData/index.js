@@ -9,8 +9,10 @@ exports.main = async (event, context) => {
 	const wxContext = cloud.getWXContext()
 	let openid = event.userInfo.openId	//用户openid
 	let {head, tail} = event.date		//查询的日期 某个周一~周日
-	let headMoment = moment(head, "YYYY-MM-DD")
-	let tailMoment = moment(tail, "YYYY-MM-DD")
+	let headMoment = moment(head, "YYYY-MM-DD").subtract(1,'days')
+	let tailMoment = moment(tail, "YYYY-MM-DD").add(1, 'days')
+	//console.log(headMoment)
+	//console.group(tailMoment)
 	let calendarTasks = []				//日程表
 	let planTasks = []					//计划
 	let nextTasks = []					//下一步
@@ -27,12 +29,12 @@ exports.main = async (event, context) => {
 
 	nextTasks = await queryTasks(openid, 'next_list')
 	nextTasks = await filterTasks(nextTasks, headMoment, tailMoment)
-	console.log(nextTasks)
+	//console.log(nextTasks)
 
 	delegationTasks = await queryTasks(openid, 'delegation_list')
 	delegationTasks = await filterTasks(delegationTasks, headMoment, tailMoment)
-	result = {calendarTasks, planTasks, nextTasks, delegationTasks}
-	return result
+	result = await {calendarTasks, planTasks, nextTasks, delegationTasks}
+	return await result
 }
 async function queryTasks(openid, collectionName){
 	let collection = db.collection(collectionName)
@@ -50,11 +52,12 @@ async function getDoc(openid, collection){
 	let doc = await collection.doc(id)
 	return doc
 }
-function filterTasks(tasks, headMoment, tailMoment){
+async function filterTasks(tasks, headMoment, tailMoment){
 	let newTasks = []
 	for(let i in tasks){
-		//console.log(tasks[i].addDate)	//每件事的addDate
-		if(moment(tasks[i].addDate, "YYYY-MM-DD").isBetween(headMoment.subtract(1, "d"), tailMoment.add(1, "d"), 'days')){	//如果添加日期在选择的日期之间
+		console.log(tasks[i].addDate)	//每件事的addDate
+		let between = await moment(tasks[i].addDate, "YYYY-MM-DD").isBetween(headMoment, tailMoment)
+		if(between){	//如果添加日期在选择的日期之间
 			newTasks.push(tasks[i])
 		}
 	}

@@ -38,7 +38,7 @@
             <block wx:for="{{item.taskSteps}}" wx:for-index="stepIndex" wx:for-item="stepItem" wx:key="{{stepIndex}}">
                 <view slot="footer" >{{stepItem.step}}</view>
             </block>
-            
+            <view slot="footer">添加日期:{{item.addDate}}</view>
             </i-card>
         </block>
     </view>

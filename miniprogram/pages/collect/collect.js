@@ -98,7 +98,7 @@ Page({
 			}
 		}).then(
 			(res) => {
-				console.log(res)
+				//console.log(res)
 			},
 			(err) => {
 				console.log(err)
@@ -239,7 +239,7 @@ Page({
 		// pickedPlanEndDate	选择的计划结束时间
 		let tasks = this.data.tasks	//当前tasks数组
 		let addDate = utils.formatNow()
-		console.log('时间'+addDate)
+		//console.log('时间'+addDate)
 		wx.showLoading({
 			title: '正在加载数据',
 			mask: true
@@ -253,8 +253,8 @@ Page({
 			boxIndex: this.otherData.selectedBox,
 			addDate,
 			pickedDate: this.data.pickedDate,		//选择的日程时间
-			pickedPlanStartDate:  this.data.pickedPlanStartDate,//选择的计划开始时间
-			pickedPlanEndDate:  this.data.pickedPlanEndDate,	//选择的计划结束时间
+			startDate:  this.data.pickedPlanStartDate,//选择的计划开始时间
+			endDate:  this.data.pickedPlanEndDate,	//选择的计划结束时间
 			isFinish: false
 		}
 		wx.cloud.callFunction({
@@ -278,11 +278,10 @@ Page({
 					icon: 'success',
 					duration: 2000
 				})
-				let boxSrcStr = 'boxes['+this.otherData.selectedBox+'].boxSrc'	//恢复盒子的样式
+				let boxSrcStr = 'boxes['+this.otherData.selectedBox+'].boxSrc'	
 				this.setData({
-					[boxSrcStr]: '../../images/box.png',
+					[boxSrcStr]: '../../images/box.png'	//恢复盒子的样式
 				})
-				
 				this.otherData.selectedBox = null	//将选中的箱子置空
 				wx.hideLoading()
 			},

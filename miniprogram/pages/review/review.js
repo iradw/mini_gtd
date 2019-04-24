@@ -40,6 +40,7 @@ Page({
 		this.setData({
 			dateList
 		})
+		//console.log(dateList)
 	},
 	onClickItem(event){
 		let itemIndex = event.target.dataset.index
@@ -69,7 +70,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		this.calculateDate("2019-01-1", utils.formatNow())	//utils.today()
+		this.calculateDate("2019-01-1", utils.formatNow())	//utils.formatNow()
 	},
 
 	/**

@@ -44,7 +44,7 @@ async function deleteData(openid, taskIndex){
 	}
 }
 async function addData(openid, prams){
-	let {boxIndex, taskId, task, addDate, pickedDate, pickedPlanStartDate, pickedPlanEndDate, isFinish} = prams
+	let {boxIndex, taskId, task, addDate, pickedDate, startDate, endDate, isFinish} = prams
 	let newTask = {
 		taskId,
 		task,
@@ -117,8 +117,8 @@ async function addData(openid, prams){
 		case 3:				//计划
 			newTask.isFinish = isFinish
 			newTask.finishDate = null
-			newTask.pickedPlanStartDate = pickedPlanStartDate
-			newTask.pickedPlanEndDate = pickedPlanEndDate
+			newTask.startDate = startDate
+			newTask.endDate = endDate
 			newTask.isFinish = isFinish
 			newTask.finishDate = null
 			const plan_list = db.collection('plan_list')

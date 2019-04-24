@@ -17,17 +17,12 @@ Page({
  onLogin(){
     this.onGetOpenid()
     wx.switchTab({
-      url: '/pages/arrange/arrange'
+      url: '/pages/my/my'
     })
   },
 
   onLoad: function() {
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
-      })
-      return
-    }
+    
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -39,6 +34,12 @@ Page({
                 avatarUrl: res.userInfo.avatarUrl,
                 userInfo: res.userInfo,
                 showLogin: true
+              })
+              app.globalData.avatarUrl = res.userInfo.avatarUrl
+              app.globalData.userInfo = res.userInfo
+              this.onGetOpenid()
+              wx.switchTab({
+                url: '/pages/my/my'
               })
             }
           })
@@ -57,6 +58,8 @@ Page({
         userInfo: e.detail.userInfo,
         showLogin: true
       })
+      app.globalData.avatarUrl = e.detail.userInfo.avatarUrl
+      app.globalData.userInfo = e.detail.userInfo
     }
   },
 
@@ -69,7 +72,7 @@ Page({
       success: res => {
         //console.log('[云函数] [login] user openid: ', res.result.openid)
         let openid =  res.result.openid
-        this.otherData = openid
+        this.otherData.openid = openid
         app.globalData.openid = openid
       },
       fail: err => {
