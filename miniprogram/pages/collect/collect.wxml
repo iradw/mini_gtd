@@ -20,7 +20,7 @@
 
         <movable-view class="task-boxes" wx:for="{{boxes}}" wx:key="index" x='{{item.x}}' y='{{item.y}}'>
             <image src="{{item.boxSrc}}" mode="scaleToFill"/>
-            <text class="list" id="{{item.id}}">{{item.text}}</text>
+            <text class="list-name" id="{{item.id}}">{{item.text}}</text>
         </movable-view>
         
         <i-modal title="确认框" confirm-text="添加" cancel-text="取消" 

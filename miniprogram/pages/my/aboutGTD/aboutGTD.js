@@ -1,18 +1,56 @@
 // miniprogram/pages/my/aboutGTD/aboutGTD.js
+wx.cloud.init()
 Page({
 
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
-
+		calendar: '',
+		clear: [],
+		delegation: '',
+		execute: '',
+		next: '',
+		overview: '',
+		plan: '',
+		review: '',
+		someday: '',
+		title: '',
+		towmin: ''
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		wx.cloud.callFunction({
+			name: 'my_aboutGTD',
+			data:{
 
+			}
+		}).then(
+			(res) => {
+				console.log(res.result)
+				let {calendar, clear, collect, delegation, execute, next, overview, plan, review, someday, title, twomin} = res.result
+				this.setData({
+					calendar,
+					clear,
+					collect,
+					delegation,
+					execute,
+					next,
+					overview,
+					plan,
+					review,
+					someday,
+					title,
+					twomin
+				})
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
 	},
 
 	/**

@@ -39,8 +39,8 @@ Page({
 				x: '540rpx',
 				y: '605rpx',
 				boxSrc: '../../images/box.png',
-				text: '等待',
-				id: 'w-list'
+				text: '委托',
+				id: 'd-list'
 			},
 			{
 				x: '110rpx',
@@ -53,8 +53,8 @@ Page({
 				x: '325rpx',
 				y: '755rpx',
 				boxSrc: '../../images/box.png',
-				text: '愿望',
-				id: 'wish-list'
+				text: 'someday',
+				id: 's-list'
 			},
 			{
 				x: '540rpx',

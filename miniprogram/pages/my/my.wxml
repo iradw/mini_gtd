@@ -4,14 +4,11 @@
 </view>
 
 <view class="menu-list">
-    <i-cell i-class="option" title="关于GTD" is-link url="../my/aboutGTD/aboutGTD"></i-cell>
+    <i-cell i-class="option" title="什么是GTD" is-link url="../my/aboutGTD/aboutGTD"></i-cell>
     <i-cell i-class="option" title="使用教程" is-link url="../my/tutorial/tutorial"></i-cell>
 </view>
 
 <view class="menu-list">
-    <i-cell i-class="option" title="夜间模式">
-        <switch slot="footer" checked/>
-    </i-cell>
     <i-cell i-class="option" title="开发团队" is-link url="../my/devTeam/devTeam"></i-cell>
     <i-cell i-class="option" title="推荐给好友"></i-cell>
 </view>
