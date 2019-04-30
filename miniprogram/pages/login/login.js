@@ -8,8 +8,7 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: '',
-    showLogin: false
+    requestResult: ''
   },
   otherData: {
     openid: ''
@@ -32,15 +31,11 @@ Page({
             success: res => {
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo,
-                showLogin: true
+                userInfo: res.userInfo
               })
               app.globalData.avatarUrl = res.userInfo.avatarUrl
               app.globalData.userInfo = res.userInfo
-              this.onGetOpenid()
-              wx.switchTab({
-                url: '/pages/my/my'
-              })
+              this.onLogin()
             }
           })
         }
@@ -55,11 +50,11 @@ Page({
       this.setData({
         logged: true,
         avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo,
-        showLogin: true
+        userInfo: e.detail.userInfo
       })
       app.globalData.avatarUrl = e.detail.userInfo.avatarUrl
       app.globalData.userInfo = e.detail.userInfo
+      this.onLogin()
     }
   },
 

@@ -1,5 +1,4 @@
 // miniprogram/pages/collect/collect.js
-const app = getApp()
 
 let utils = require('../../utils/utils')
 const db = wx.cloud.database()
