@@ -34,7 +34,7 @@ Page({
 		}).then(
 			(res) => {
 				console.log(res.result)
-				let {calendar, clear, collect, delegation, execute, next, overview, plan, review, someday, title, twomin} = res.result
+				let {calendar, clear, collect, delegation, execute, next, overview, plan, review, someday, twomin} = res.result
 				this.setData({
 					calendar,
 					clear,
@@ -46,7 +46,6 @@ Page({
 					plan,
 					review,
 					someday,
-					title,
 					twomin
 				})
 				wx.hideLoading()

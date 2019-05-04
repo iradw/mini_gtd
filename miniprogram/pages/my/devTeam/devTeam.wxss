@@ -5,3 +5,6 @@ page {
 i-card {
   margin: 20rpx 0;
 }
+i-card .member {
+  padding-bottom: 4rpx 0;
+}

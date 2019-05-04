@@ -52,7 +52,7 @@ Page({
 				x: '325rpx',
 				y: '755rpx',
 				boxSrc: '../../images/box.png',
-				text: 'someday',
+				text: '将来某天',
 				id: 's-list'
 			},
 			{

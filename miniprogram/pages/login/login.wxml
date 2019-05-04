@@ -1,7 +1,9 @@
 <!--index.wxml-->
 <view class="container">
 
-  <!-- <view class="logo" class="logo" >LOGO</view> -->
+  <view class="logo" class="logo" >
+    <text class="logo-img">LOGO</text>
+  </view>
 
   <text class="explain">需要获取用户名、头像，请点击下方按钮授权，并在弹窗中点击允许</text>
   <button class='login'  open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" type="primary">授权并登录</button>
