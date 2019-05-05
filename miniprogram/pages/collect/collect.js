@@ -1,8 +1,6 @@
 // miniprogram/pages/collect/collect.js
 
 let utils = require('../../utils/utils')
-const db = wx.cloud.database()
-const users = db.collection('users')
 Page({
 
 	/**
@@ -240,7 +238,7 @@ Page({
 		let addDate = utils.formatNow()
 		//console.log('时间'+addDate)
 		wx.showLoading({
-			title: '正在加载数据',
+			title: '正在添加',
 			mask: true
 
 		})
@@ -375,7 +373,7 @@ Page({
 	//选择计划开始时间
 	onPickPlanStartDate(event){
 		this.setData({
-			pickedPlanStartDate: event.detail.value
+			pickedPlanStartDate: event.detail.value,
 		})
 	},
 	//选择计划结束时间

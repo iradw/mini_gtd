@@ -69,7 +69,7 @@ page {
 }
 .move-area .datePicker {
   display: inline-block;
-  border: 1rpx solid #cdcdcd;
+  border-bottom: 1rpx solid #cdcdcd;
   padding: 5rpx;
   margin-left: 20rpx;
 }

@@ -1,29 +1,33 @@
-<!--miniprogram/pages/my/aboutGTD/aboutGTD.wxml-->
-<view class="block overview">
-    <text class="title">总述</text>
-    <text class="body">{{ overview }}</text>
-</view>
-
-<view class="block collect">
-    <text class="title">收集</text>
-    <text class="body">{{ collect }}</text>
-</view>
-
-<view class="block clear">
-    <text class="title">整理</text>
-    <text class="step" wx:for="{{ clear }}" wx:key="{{ index }}">{{ item }}</text>
-    <text class="sub">
-        <text class="sub-title">两分钟原则: </text>
-        <text class="sub-body">{{ twomin }}</text>
-    </text>
-</view>
-
-<view class="block review">
-    <text class="title">回顾</text>
-    <text class="body">{{ review }}</text>
-</view>
-
-<view class="block execute">
-    <text class="title">执行</text>
-    <text class="body">{{ execute }}</text>
+<view class="caption-wrap">
+    <text class="caption-title">GTD简介</text>
+    <i-collapse name="{{name}}" i-class="extends">
+        <i-collapse-item title="总述" name="overview">
+            <view slot="content">
+                {{ overview }}
+            </view>
+        </i-collapse-item>
+        <i-collapse-item title="收集" name="collect">
+            <view slot="content">
+                {{ collect }}
+            </view>
+        </i-collapse-item>
+        <i-collapse-item title="整理" name="clear">
+            <view slot="content" wx:for="{{ clear }}" wx:key="{{ index }}" >
+                {{ item }}
+            </view>
+            <view slot="content">
+                两分钟原则: {{ twomin }}
+            </view>
+        </i-collapse-item>
+        <i-collapse-item title="回顾" name="review">
+            <view slot="content">
+                {{ review }}
+            </view>
+        </i-collapse-item>
+        <i-collapse-item title="执行" name="execute">
+            <view slot="content">
+                {{ execute }}
+            </view>
+        </i-collapse-item>
+    </i-collapse>
 </view>

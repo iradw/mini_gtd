@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "i-collapse": "../../../lib/iview/collapse/index",
+    "i-collapse-item": "../../../lib/iview/collapse-item/index"
+  }
 }

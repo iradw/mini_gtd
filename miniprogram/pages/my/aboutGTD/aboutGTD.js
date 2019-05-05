@@ -16,7 +16,8 @@ Page({
 		review: '',
 		someday: '',
 		title: '',
-		towmin: ''
+		towmin: '',
+		name: 'overview'
 	},
 
 	/**
@@ -33,7 +34,7 @@ Page({
 			}
 		}).then(
 			(res) => {
-				console.log(res.result)
+				// console.log(res.result)
 				let {calendar, clear, collect, delegation, execute, next, overview, plan, review, someday, twomin} = res.result
 				this.setData({
 					calendar,
