@@ -1,1 +1,39 @@
-<calendar />
+<calendar  calendar-style="calendar" header-style="header" board-style="board" weeks-type="cn" active-type="rounded"  
+    days-color="{{ daysColor }}" year="{{ year }}" month="{{ month }}" day="{{ day }}"
+     binddayClick="onDayClick"/>
+     <view class="div"></view>
+<view class="calendar-card" wx:for="{{ tasks }}" wx:key="{{ index }}" >
+
+    <view class="task">
+        <input type="text" class="input-task" value="{{ item.task }}" focus="{{ item.isTaskModify }}" disabled="{{ !item.isTaskModify }}" data-index="{{ index }}" 
+            bindinput="onTaskInput" bindblur="onTaskBlur" style="border-color: {{ item.isTaskModify ? '#5cadff' : '#80848f' }};"/>
+        <view class="icon-modify" >
+        <i-icon type="brush" size="17" color="{{ item.isTaskModify ? '#5cadff' : '#80848f' }}" data-index="{{ index }}" bindtap="onClickTaskModify"/>
+        </view>
+    </view>
+    
+    <view class="remark">
+        <input type="text" class="input-remark" value="{{ item.remark}}" focus="{{ item.isRemarkModify }}" disabled="{{ !item.isRemarkModify }}" data-index="{{ index }}"
+            bindinput="onRemarkInput" bindblur="onRemarkBlur" style="border-color: {{ item.isRemarkModify ? '#5cadff' : '#80848f' }};"/>
+        <view class="icon-modify" >
+            <i-icon type="brush" size="15" color="{{ item.isRemarkModify ? '#5cadff' : '#80848f' }}" data-index="{{ index }}" bindtap="onClickRemarkModify"/>
+        </view>   
+    </view>
+
+    <view class="operate">
+        <view class="icon icon-finish" bindtap="onClickFinish" data-index="{{ index }}">
+            <i-icon type="right" size="28" color="{{ item.isFinish ? '#5cadff' : '#80848f'}}"/>
+        </view>
+        <view class="icon icon-delete" bindtap="onClickDelete" data-index="{{ index }}">
+            <i-icon type="trash" size="28" color="#80848f"/>
+        </view>
+    </view>
+</view>
+<view class="icon-add" bindtap="onClickAdd">
+    <image src="../../images/collect_on.png" />
+</view>
+
+<i-modal title="删除确认" visible="{{ deleteModal }}" 
+    bind:ok="onDeleteConfirm" bind:cancel="onDeleteCancel">
+    <view>删除后无法恢复哦</view>
+</i-modal>

@@ -14,7 +14,7 @@ Page({
  onLogin(){
     this.onGetOpenid()
     wx.switchTab({
-      url: '/pages/my/my'
+      url: '/pages/calendar/calendar'
     })
   },
 
@@ -69,7 +69,7 @@ Page({
         //console.log('[云函数] [login] user openid: ', res.result.openid)
         let {openid, registerDate} =  res.result
         app.globalData.openid = openid
-        console.log(registerDate)
+        //console.log(registerDate)
         app.globalData.registerDate = registerDate
       },
       fail: err => {

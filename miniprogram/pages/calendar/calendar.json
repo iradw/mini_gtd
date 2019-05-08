@@ -1,5 +1,8 @@
 {
   "usingComponents": {
-    "calendar": "plugin://calendar/calendar"
+    "calendar": "plugin://calendar/calendar",
+    "i-icon": "../../lib/iview/icon/index",
+    "i-modal": "../../lib/iview/modal/index",
+    "i-message": "../../lib/iview/message/index"
   }
 }

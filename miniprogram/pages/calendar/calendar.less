@@ -1,0 +1,95 @@
+.calendar{
+    padding-top: 25rpx;
+    border: 25rpx solid #dddee1;
+    border-radius: 30rpx;
+    display: block;
+    color: #5cadff;
+}
+.header{
+    font-size: 50rpx;
+    color: #2d8cf0
+}
+.board{
+    margin: 20rpx auto;
+}
+.div{
+    height: 20rpx;
+}
+.base-input{
+    border-bottom: 2rpx solid #cdcdcd;
+    min-height: 28px;
+    border-radius: 15rpx;
+    padding: 0 30px 0 10rpx;
+    
+}
+.base-icon-modify{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.calendar-card{
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    border: #cdcdcd 2rpx solid;
+    border-radius: 30rpx;
+    padding: 20rpx;
+    line-height: 28px;
+    .task{
+        position: relative;
+        width: 70%;
+        height: 30px;
+        padding: 6rpx;
+        .input-task{
+            .base-input;
+            font-size: 17px;
+            line-height: 20px;
+            color: #1c2438;
+        }
+        .icon-modify{
+            .base-icon-modify
+        }
+    }
+    .remark{
+        position: relative;
+        width: 70%;
+        height: 30px;
+        padding: 6rpx;
+        .input-remark{
+            .base-input;
+            font-size: 15px;
+            line-height: 15px;
+            color: #bbbec4;
+        }
+        .icon-modify{
+            .base-icon-modify
+        }
+    }
+    .operate{
+        position: absolute;
+        top: 0;
+        right: 14rpx;
+        height: 28px;
+        line-height: 28px;
+        .icon{
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            display: inline-block;
+            margin: 2rpx 6rpx;
+        }
+    }
+}
+.icon-add{
+    height: 30px;
+    width: 30px;
+    margin: 6rpx auto;
+    border: #2d8cf0 4rpx solid;
+    border-radius: 50%;
+    image{
+        height: 30px;
+        width: 30px;
+    }
+}
