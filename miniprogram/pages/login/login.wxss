@@ -4,7 +4,6 @@ page {
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
-  background: url("https://656e-envname-d78831-1258147876.tcb.qcloud.la/admin/loginbg.jpg?sign=e5e4dda87d75ed39198b25ca3a935ac9&t=1556888577");
   background-size: 100% 100%;
 }
 .container {
@@ -34,7 +33,6 @@ page {
   margin: 100rpx auto;
   font-size: 30rpx "微软雅黑";
   color: #ec2d26;
-  font-weight: bold;
 }
 .container .login {
   display: block;

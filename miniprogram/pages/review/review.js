@@ -2,6 +2,7 @@
 const moment = require('../../lib/moment.min.js')
 moment.locale('zh-cn')
 const utils = require('../../utils/utils')
+const app = getApp()
 Page({
 
 	/**
@@ -56,7 +57,8 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-
+		let registerDate = app.globalData.registerDate
+		this.calculateDate(registerDate, utils.formatNow())
 	},
 
 	/**
@@ -70,7 +72,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		this.calculateDate("2019-01-1", utils.formatNow())	//utils.formatNow()
+			//utils.formatNow()
 	},
 
 	/**

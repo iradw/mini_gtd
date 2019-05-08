@@ -1,6 +1,7 @@
 //index.js
 // import regeneratorRuntime from ('../../lib/regenerator-runtime/runtime')
 const app = getApp()
+import moment from '../../lib/moment.min.js'
 
 Page({
   data: {
@@ -9,9 +10,6 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: ''
-  },
-  otherData: {
-    openid: ''
   },
  onLogin(){
     this.onGetOpenid()
@@ -63,12 +61,16 @@ Page({
     // 调用云函数
      wx.cloud.callFunction({
       name: 'login',
-      data: {},
+      data: {
+        registerDate: moment().format('YYYY-MM-DD'),
+        nickName: this.data.userInfo.nickName
+      },
       success: res => {
         //console.log('[云函数] [login] user openid: ', res.result.openid)
-        let openid =  res.result.openid
-        this.otherData.openid = openid
+        let {openid, registerDate} =  res.result
         app.globalData.openid = openid
+        console.log(registerDate)
+        app.globalData.registerDate = registerDate
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)

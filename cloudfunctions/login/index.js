@@ -13,6 +13,7 @@ const next_list = db.collection('next_list')
 const plan_list = db.collection('plan_list')
 const reference_list = db.collection('reference_list')
 const someday_list = db.collection('someday_list')
+const inbox = db.collection('inbox')
 
 
 /**
@@ -22,97 +23,68 @@ const someday_list = db.collection('someday_list')
  * 
  */
 exports.main = async (event, context) => {
-  //console.log(event)
-  //console.log(context)
-
-  // 可执行其他自定义逻辑
-  // console.log 的内容可以在云开发云函数调用日志查看
-
-  // 获取 WX Context (微信调用上下文)，包括 OPENID、APPID、及 UNIONID（需满足 UNIONID 获取条件）
+  
   const wxContext = cloud.getWXContext()
   let openId = event.userInfo.openId
-  let allId = await userId.where({openid:openId}).get()
-	.then(
-		(res) => {
-			console.log(res)
-			if(res.data.length === 0){
-				console.log('没有这个用户')
-			} else{
-				console.log('该用户已存在')
-			}
-		},
-		(err) => {
-			console.log(err)
-		}
-	)
-  // if (Object.keys(allId).length==0){
-    // userId.add({
-    //   data: {
-    //     openId: openId,
-    //   }
-    // }).then(res => {
-    //   console.log(res)
-    // })
 
-    // calendar_list.add({
-    //   data: {
-    //     openId: openId,
-    //     tasks: [{}]
-    //   }
-    // }).then(res => {
-    //   console.log(res)
-    // })
+  let {registerDate, nickName} = event
+  await userId.where({
+    openid:openId
+  }).get()
+  .then(
+      async res => {
+        //if 新用户
+      if (res.data.length === 0) {
+        await initUserInfo(openId, nickName, registerDate)
 
-    // delegation_list.add({
-    //   data: {
-    //     openId: openId,
-    //     tasks: [{}]
-    //   }
-    // }).then(res => {
-    //   console.log(res)
-    // })
-
-    // next_list.add({
-    //   data: {
-    //     openId: openId,
-    //     tasks: [{}]
-    //   }
-    // }).then(res => {
-    //   console.log(res)
-    // })
-
-    // plan_list.add({
-    //   data: {
-    //     openId: openId,
-    //     tasks: [{}]
-    //   }
-    // }).then(res => {
-    //   console.log(res)
-    // })
-
-    // reference_list.add({
-    //   data: {
-    //     openId: openId,
-    //     tasks: [{}]
-    //   }
-    // }).then(res => {
-    //   console.log(res)
-    // })
-
-    // someday_list.add({
-    //   data: {
-    //     openId: openId,
-    //     tasks: [{}]
-    //   }
-    // }).then(res => {
-    //   console.log(res)
-    // })
-  //}
+        }else{
+          //老用户 获取注册时间
+          // console.log(res.data[0].registerDate)
+          registerDate = res.data[0].registerDate
+        }
+      }
+    )
 
   return {
-    event,
-    openid: wxContext.OPENID,
+    registerDate,
+    openid: openId,
     appid: wxContext.APPID,
     unionid: wxContext.UNIONID,
   }
+}
+
+async function initUserInfo(openid, nickName, registerDate){
+  let initData = {
+    openid,
+    nickName,
+    tasks: []
+  }
+  let collections = [calendar_list, delegation_list, next_list, plan_list, someday_list, inbox, reference_list]
+  return await new Promise( (resolve, reject) => {
+    let promises = []
+    promises[0] = userId.add({
+        data: {
+          openid,
+          nickName,
+          registerDate,
+        }
+      })
+    
+    collections.forEach( (collection, index) => {
+      promises[index+1] = collection.add({
+        data: initData
+      })
+    })
+    console.log(promises)
+    Promise.all(promises).then(
+      (res) =>{
+        resolve()
+      },
+      (err) => {
+        reject(err)
+      }
+    )
+  })
+  
+  
 }
