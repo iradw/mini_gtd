@@ -20,7 +20,7 @@ page {
   border: 2rpx solid #cdcdcd;
   border-radius: 35rpx;
   margin-bottom: 50rpx;
-  box-shadow: 0 6rpx 0;
+  box-shadow: 0 6rpx 0 #2d8cf0;
   padding: 50rpx 0;
 }
 .userinfo .avatar {

@@ -43,11 +43,11 @@ Page({
 			// 	endDate: '2019-04-27',
 			// 	taskSteps: [
 			// 		{
-			// 			step: '这是步骤1',
+			// 			task: '这是步骤1',
 			// 			isFinish: false
 			// 		},
 			// 		{
-			// 			step: '这是步骤2',
+			// 			task: '这是步骤2',
 			// 			isFinish: false
 			// 		}
 			// 	]
@@ -59,11 +59,11 @@ Page({
 			// 	endDate: '2019-04-27',
 			// 	taskSteps: [
 			// 		{
-			// 			step: '这是步骤1',
+			// 			task: '这是步骤1',
 			// 			isFinish: false
 			// 		},
 			// 		{
-			// 			step: '这是步骤2',
+			// 			task: '这是步骤2',
 			// 			isFinish: false
 			// 		}
 			// 	]
@@ -110,6 +110,7 @@ Page({
 			(res) => {
 				//console.log(res.result)
 				let {calendarTasks, delegationTasks, nextTasks, planTasks} = res.result
+				console.log(planTasks)
 				this.setData({
 					calendarTasks,
 					delegationTasks,
