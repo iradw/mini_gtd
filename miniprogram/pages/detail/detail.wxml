@@ -1,0 +1,143 @@
+
+<view wx:if="{{collectionName == 'plan_list'}}">
+  <view>
+    <view class="taskName">
+      <!-- <text style="color: #1c2438; font-weight: 600;margin-right: 40rpx;">事件名：</text> -->
+      <input style="color: #495060" value='{{task}}' focus="{{focus}}" bindblur="titleEdit" disabled='{{ editDisable }}' />
+      <view class="editImage" bindtap="taskEdit"><image src="../../images/alter.png"  ></image></view>
+      <view class="editImage" bindtap="taskDelete"><image src="../../images/delete.png"  ></image></view>
+    </view>
+    <view style=" margin-left:20rpx; ">
+      <label for="endDate" class="label">开始日期：</label>
+      <picker mode="date" bindchange="onPickPlanStartDate" value="{{startDate}}" class="datePicker" id="endDate">
+        {{startDate}}
+      </picker>
+    </view>
+    <view style=' margin-left:20rpx'>
+      <label for="endDate" class="label">结束日期：</label>
+      <picker mode="date" bindchange="onPickPlanEndDate" value="{{endDate}}" class="datePicker" id="endDate">
+        {{endDate}}
+      </picker>
+    </view>
+  </view>
+  <view>
+    <view class="planTitle">为你的计划添加几个小步骤吧!</view>
+    <view class="box" wx:for="{{ steps }}" wx:key="index" wx:for-item="step">
+      <view class="item {{step.status ? '' :'active'}}">
+        <!-- <view class="planTitle">{{index+1+"." }}</view> -->
+        <input class="content" bindtouchstart="touchS" bindtouchmove="touchM" value='{{step.value }}' disabled='{{ step.disable }}' data-index='{{index}}' style="color: {{step.isFinish ? '#2d8cf0' : '#ed3f14'}}" bindblur="lostFocus" auto-focus/>
+        <view class="del-button">
+          <button class="button-content" type='primary' bindtap="completeTask" data-index1='{{index}}' data-flags='1'>{{steps[index].buttonText}}</button>
+          <button class="button-content" type='default' bindtap="goTask" data-index2='{{index}}'>转到</button>
+          <button class="button-content" type='warn' bindtap="deleteTask" data-index3='{{index}}'>删除</button>
+        </view>
+      </view>
+      
+    </view>
+    <view style=' height: 50rpx'></view>
+  
+    <button type='primary' bindtap="addTask">添加</button>
+    
+  </view>
+</view>
+<view wx:if="{{collectionName == 'next_list' || collectionName == 'delegation_list' || collectionName == 'reference_list' || collectionName == 'someday_list'}}">
+  <view>
+    <view class="taskName">
+     
+      <input style="color: #495060" value='{{task}}' focus="{{focus}}" bindblur="titleEdit" disabled='{{ editDisable }}' />
+      <view class="editImage" bindtap="taskEdit"><image src="../../images/alter.png"  ></image></view>
+    </view>
+    <view style=' margin-left:20rpx'>
+      <label for="endDate" class="label">添加日期：</label>
+      <picker disabled="true" mode="date" bindchange="onPickPlanEndDate" value="{{addDate}}" class="datePicker" id="endDate">
+       {{addDate}}
+      </picker>
+    </view>
+  </view>
+  <!-- <view class="groupMenu">
+    <!-- handleMenu为父组件和自定义组件之间通信的桥梁 -->
+    <!-- <menu class='menu' menu_list='{{menu_list}}' bind:handleMenu='handleMenu' /> -->
+    <!-- <text class='text'>HOME</text> -->
+  <!-- </view> --> 
+  <view>
+  <image src="../../images/complete.png" class="img-style" animation="{{animCollect}}" bindtap="otherComplete"></image>
+  <image src="../../images/add.png" class="img-style" animation="{{animTranspond}}" bindtap="goTask"></image>
+  <image src="../../images/delete.png" class="img-style" animation="{{animInput}}" bindtap="otherDelete"></image>
+  <image src="../../images/collect_on.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image>
+</view>
+
+
+
+</view>
+  
+  <!-- <text class="iconfont icon-gouwuche">123</text> -->
+<view>
+  <view class="zan-dialog {{ showDialog ? 'zan-dialog--show' : '' }}">
+    <view class="zan-dialog__mask" bindtap="toggleDialog" />
+      <view class="zan-dialog__container">
+        <view style='padding:0rpx;'>
+          <view class="radioTitle">将此步骤添加到一个具体项目中：</view>
+          <view>  
+            <radio-group class="radio-group" bindchange="radioChange">
+              <label class="radio" wx:for="{{items}}" wx:key="index">
+                <radio value="{{item.name}}" bindtap="radio" data-id="{{item.task_key}}" checked="{{item.checked}}"/>{{item.value}}
+              </label>
+            </radio-group>
+          </view>
+          <view style="text-align: center">
+            <button class="radioButton" size='mini' type='primary' bindtap="appointButton">确定</button>
+            <button class="radioButton" style="margin-left:0rpx" size='mini' type='warn' bindtap="abolishButton">取消</button>
+          </view>
+          
+        
+        </view>
+      </view>
+  </view>
+</view>
+<view>
+  <view class="zan-dialog {{ showDate ? 'zan-dialog--show' : '' }}">
+    <view class="zan-dialog__mask" bindtap="toggleDate" />
+      <view class="zan-dialog__container">
+        <view style="text-align: center">
+          <view class="radioTitle">为该步骤添加日期</view>
+          <view style="text-align: center;height: 128rpx">
+            <view wx:if="{{itemId==2}}">
+              <view >
+                  <label for="endDate" class="label">开始日期：</label>
+                  <picker mode="date" bindchange="goPlanStartDate" value="{{planStartDate}}" class="datePicker" id="endDate">
+                    {{planStartDate}}
+                  </picker>
+              </view>
+              <view >
+                  <label for="endDate" class="label">结束日期：</label>
+                  <picker mode="date" bindchange="goPlanEndDate" value="{{planEndDate}}" class="datePicker" id="endDate">
+                    {{planEndDate}}
+                  </picker>
+              </view>
+            </view>
+            <view wx:if="{{itemId==3}}" style="text-align: center;height: 128rpx">
+              <view  style="padding-top: 25rpx">
+                <label for="endDate" class="label">日程表日期：</label>
+                <picker mode="date" bindchange="goCalendarDate" value="{{calendarDate}}" class="datePicker" id="endDate">
+                  {{calendarDate}}
+                </picker>
+              </view>
+            </view>
+          </view>
+          
+    
+        </view>
+          <view style="text-align: center">
+            <button class="radioButton" size='mini' type='primary' bindtap="appointDateButton">确定</button>
+            <button class="radioButton" style="margin-left:0rpx" size='mini' type='warn' bindtap="abolishDateButton">取消</button>
+          </view>
+          
+        
+        
+      </view>
+  </view>
+</view>
+<i-modal title="删除确认" confirm-text="删除" cancel-text="取消" 
+            bind:ok="onDeleteConfirm" bind:cancel="onDeleteCancel" visible="{{ showDeleteDialog }}">
+</i-modal>
+

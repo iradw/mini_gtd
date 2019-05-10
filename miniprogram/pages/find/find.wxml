@@ -1,0 +1,15 @@
+<!--pages/find/find.wxml-->
+<view class='top'>
+<input class='input' type='text' placeholder='关键词' confirm-type='search' bindinput='getvalue'></input>
+<button class='search' bindtap='searchclick'>搜索</button>
+</view>
+<view class='allhistory'>搜索记录：</view>
+<view class='history'>
+<view class='historylist' wx:for="{{historylist}}" wx:key="historylists" bindtap='jumphistory' data-id='{{item.content}}'>{{item.content}}</view>
+</view>
+<view class='allresult'>搜索结果:</view>
+<view class='results'>
+<view class='result' wx:for="{{resultlist}}" wx:key="resultlist" bindtap='jumpresult' data-id='{{item.result}}'>{{item.result}}</view>
+</view>
+
+

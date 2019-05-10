@@ -1,78 +1,50 @@
+  <view class='find'>
+    <input class='input' type='text' placeholder='关键词' bindtap='jumppage'></input>
+  </view>
+    <view class='allclass'>
+      <view class='i-class' bindtap='click'  data-hash='calendar'>日程表</view>
+      <view class='i-class' bindtap='click'  data-hash='nextstep'>下一步</view>
+      <view class='i-class' bindtap='click'  data-hash='plan'>计划</view>
+      <view class='i-class' bindtap='click'  data-hash='wait'>等待清单</view>
+      <view class='i-class' bindtap='click'  data-hash='wish'>愿望清单</view>
+      <view class='i-class' bindtap='click'  data-hash='reference'>参考</view>
+    </view>
+      <scroll-view class='scroll' scroll-y scroll-into-view="{{toView}}"                                             scroll-with-animation="true">
+            <view class='classplace' id='calendar'>
+                日程表
+            </view>
+            <view>
+              <view wx:for="{{calendarlist}}" wx:for-index="number" class='thing' wx:key="calendar" id='{{item.id}}' bindtap='thingjump' data-number='{{number}}'>{{item.message}}</view>
+            </view>
+            <view class='classplace' id='nextstep'>
+                下一步
+            </view>
+            <view>
+                <view wx:for="{{nextsteplist}}" class='thing' wx:key="nextstep" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}</view>
+            </view>
+            <view class='classplace' id='plan'>
+                计划
+            </view>
+            <view>
+                <view wx:for="{{planlist}}" class='thing' wx:key="plan" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}</view>
+            </view>
+            <view class='classplace' id='wait'>
+                等待清单
+            </view>
+            <view>
+                <view wx:for="{{waitlist}}" class='thing' wx:key="wait" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}</view>
+            </view>
+            <view class='classplace' id='wish'>
+                愿望清单
+            </view>
+            <view>
+                <view wx:for="{{wishlist}}" class='thing' wx:key="wish" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}</view>
+            </view>
+            <view class='classplace' id='reference'>
+                参考
+            </view>
+            <view>
+                <view wx:for="{{referencelist}}" class='thing' wx:key="reference" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}                      </view>
+            </view>
+      </scroll-view>
 
-<view class='left'>
-    <text wx:for="{{ arr }}" wx:key="index">左侧列表{{ arr[index] }}</text>
-</view>
-<view class="i-sticky-demo">
-    <i-sticky scrollTop="{{scrollTop}}">
-        <i-sticky-item i-class="i-sticky-demo-title">
-            <view slot="title">
-                逻辑层
-            </view>
-            <view slot="content">
-                <view class="i-sticky-demo-item">注册程序</view>
-                <view class="i-sticky-demo-item">场景值</view>
-                <view class="i-sticky-demo-item">注册页面</view>
-                <view class="i-sticky-demo-item">路由</view>
-                <view class="i-sticky-demo-item">模块化</view>
-                <view class="i-sticky-demo-item">API</view>
-            </view>
-        </i-sticky-item>
-        <i-sticky-item i-class="i-sticky-demo-title">
-            <view slot="title">
-                视图层
-            </view>
-            <view slot="content">
-                <view class="i-sticky-demo-item"></view>
-                <view class="i-sticky-demo-item">场景值</view>
-                <view class="i-sticky-demo-item">注册页面</view>
-                <view class="i-sticky-demo-item">路由</view>
-                <view class="i-sticky-demo-item">模块化</view>
-                <view class="i-sticky-demo-item">API</view>
-            </view>
-        </i-sticky-item>
-        <i-sticky-item i-class="i-sticky-demo-title">
-            <view slot="title">
-                自定义组件
-            </view>
-            <view slot="content">
-                <view class="i-sticky-demo-item">注册程序</view>
-                <view class="i-sticky-demo-item">场景值</view>
-                <view class="i-sticky-demo-item">注册页面</view>
-                <view class="i-sticky-demo-item">路由</view>
-                <view class="i-sticky-demo-item">模块化</view>
-                <view class="i-sticky-demo-item">API</view>
-                <view class="i-sticky-demo-item">注册程序</view>
-                <view class="i-sticky-demo-item">场景值</view>
-                <view class="i-sticky-demo-item">注册页面</view>
-                <view class="i-sticky-demo-item">路由</view>
-                <view class="i-sticky-demo-item">模块化</view>
-                <view class="i-sticky-demo-item">API</view>
-            </view>
-        </i-sticky-item>
-        <i-sticky-item i-class="i-sticky-demo-title">
-            <view slot="title">
-                插件
-            </view>
-            <view slot="content">
-                <view class="i-sticky-demo-item">注册程序</view>
-                <view class="i-sticky-demo-item">场景值</view>
-                <view class="i-sticky-demo-item">注册页面</view>
-                <view class="i-sticky-demo-item">路由</view>
-                <view class="i-sticky-demo-item">模块化</view>
-                <view class="i-sticky-demo-item">API</view>
-                <view class="i-sticky-demo-item">注册程序</view>
-                <view class="i-sticky-demo-item">场景值</view>
-                <view class="i-sticky-demo-item">注册页面</view>
-                <view class="i-sticky-demo-item">路由</view>
-                <view class="i-sticky-demo-item">模块化</view>
-                <view class="i-sticky-demo-item">API</view>
-                <view class="i-sticky-demo-item">注册程序</view>
-                <view class="i-sticky-demo-item">场景值</view>
-                <view class="i-sticky-demo-item">注册页面</view>
-                <view class="i-sticky-demo-item">路由</view>
-                <view class="i-sticky-demo-item">模块化</view>
-                <view class="i-sticky-demo-item">API</view>
-            </view>
-        </i-sticky-item>
-    </i-sticky>
-</view>

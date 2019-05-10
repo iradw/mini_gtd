@@ -1,0 +1,236 @@
+/* pages/detail/detail.wxss */
+
+page{
+  font-size: 36rpx;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+.wrap{
+  display: flex;
+  flex-direction: column;
+}
+.task-content{
+  margin-left: 20rpx;
+  padding-left: 20rpx;
+  
+}
+.taskName{
+  height: 90rpx;
+  margin: 20rpx 0;
+  /* background-color: #bbbec4; */
+  display: flex;
+  
+}
+.taskName > text{
+  height: 90rpx;
+  line-height: 90rpx;
+  display: inline-block;
+  flex: 1.2;
+  padding: 0 0 0 40rpx;
+}
+.taskName > input{
+  padding-left: 40rpx;
+  font-size: 50rpx;
+  
+  min-height: 90rpx;
+  display: inline-block;
+  flex: 4;
+}
+.editImage{
+  display: inline-block;
+  width: 20rpx;
+  flex: 0.5;
+  align-content: center;
+}
+.editImage > image{
+  width: 64rpx; 
+  height: 64rpx; 
+ 
+  margin-top: 15rpx;
+  margin-left: 9rpx;
+}
+.label {
+  display: inline-block;
+  margin-left: 20rpx;
+  font-weight: 600;
+}
+ .datePicker {
+  display: inline-block;
+  border-bottom: 1rpx solid #cdcdcd;
+  padding: 5rpx;
+  margin-left: 20rpx;
+  margin-top: 5rpx;
+}
+.box{
+  height: 100%;
+}
+.item{
+  position:relative;
+  top: 0;
+  width: 100%;
+  height: 90rpx;
+  border-bottom: #d9d9d9 solid 1rpx;
+  padding: 0;
+}
+.item .content{
+  background-color: #ffffff;
+  height: 100%;
+  position: relative;
+  left: 0;
+  color: #2d8cf0;
+  width: 81.5%;
+  transition: all 0.3s;
+  line-height: 90rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box; 
+}
+.item .del-button{
+  position: absolute;
+  right: -280rpx;
+  width: 280rpx;
+  height: 100%;
+  background-color: #df3448;
+  color: #fff;
+  top: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+  font-size: 24rpx;
+}
+
+.item.active .content{
+  left: -140rpx;
+  font-size: 16rpx;
+}
+.item.active .del-button{
+  right: 0;
+}
+.del-button-1{
+  width: 140rpx;
+  height: 100%;
+  background-color: #fff;
+  position: relative;
+  display: flex;
+}
+.button-content{
+  font-size: 19rpx;
+  line-height: 90rpx;
+  height: 100%;
+  width: 33.3%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.planTitle{
+  
+  text-align: center;
+  margin: 50rpx;
+  padding: 10rpx 0;
+  background-color: #f8ffbb;
+  color: rgba(255, 72, 0, 0.904);
+}
+.zan-dialog__mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0);/* 设置阴影半透明背景如： background: rgba(0, 0, 0, 0.4); */
+  display: none;
+}
+
+.zan-dialog__container {
+  position: fixed;
+  bottom: 400rpx;
+  width: 650rpx;  /* 弹窗布局宽 */
+  height: 350rpx; /*  弹窗布局高，与下面弹出距离transform有关 */
+  margin-left: 50rpx;
+  background: #f8f8f8;
+  transform: translateY(300%);/* 弹框弹出距离，与弹框布局高度有关，如300%表示弹起距离为3倍弹窗高度 */
+  transition: all 0.4s ease;
+  z-index: 12;
+  border-radius: 20rpx;
+  box-shadow: 0px 3px 3px 2px gainsboro;/* 弹框的悬浮阴影效果，如不需要可注释该行 */
+}
+
+.zan-dialog--show .zan-dialog__container {
+  transform: translateY(0);
+}
+
+.zan-dialog--show .zan-dialog__mask {
+  display: block;
+}
+.radioTitle{
+  margin: 20rpx;
+}
+.radio-group{
+  text-align: center;
+}
+.radio{
+  display: inline-block;
+  /* width: 160rpx; */
+  padding: 10rpx;
+}
+.radioButton{
+  margin: 20rpx 120rpx;
+}
+
+
+/* 副页面 */
+/* groupMenu{
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+/* .text{
+  font-size: 60rpx;
+} */
+/* .menu{
+  position: absolute;
+  bottom: 50rpx;
+  right: 50rpx;
+}
+
+.text{
+    font-family: MicroSoft Yahei;
+      color: #777;
+      font-size: 60rpx;
+} */
+
+/* .page{
+  background-color: #f2f2f2;
+} */ 
+
+
+/* ///////////////////////// */
+
+.img-plus-style {
+  height: 100rpx;
+  width: 100rpx;
+  position: absolute;
+  bottom: 250rpx;
+  right: 100rpx;
+  z-index: 100;
+  border: 6rpx #2d8cf0 solid;
+  border-radius: 50%;
+}
+ 
+.img-style {
+  height: 100rpx;
+  width: 100rpx;
+  position: absolute;
+  bottom: 250rpx;
+  right: 100rpx;
+  opacity: 0;
+}

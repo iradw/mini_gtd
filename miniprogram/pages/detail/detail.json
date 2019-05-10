@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "i-modal": "../../lib/iview/modal/index",
+    "i-icon": "../../lib/iview/icon/index"
+
+  },
+
+  "navigationBarTitleText": "时间详情"
+}

@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "i-sticky": "../../lib/iview/sticky/index",
-    "i-sticky-item": "../../lib/iview/sticky-item/index"
+   "i-sticky": "../../lib/iview/sticky/index",
+  "i-sticky-item": "../../lib/iview/sticky-item/index"
   }
 }

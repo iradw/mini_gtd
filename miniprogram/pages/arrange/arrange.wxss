@@ -1,24 +1,54 @@
-page {
-  height: 100%;
-  display: flex;
-  flex-direction: row;
+/* miniprogram/pages/arrange/arrange.wxss */
+page{
+  height: 100%
 }
-.left {
+.find{
+  background-color:white;
+  width: 100%;
+  height: 140rpx
+}
+.input{
+    padding-left: 10px;
+    position: fixed;
+    left: 40rpx;
+    top: 40rpx;
+    width: 500rpx;
+    height: 40rpx;
+    border: 2rpx solid lightslategray;
+    border-radius: 50rpx}
+.allclass{
+  background-color:#F5F5F5;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 30%;
+  top: 140rpx;
+  bottom: 0rpx;
+  left: 0rpx;
   height: 100%;
-  overflow: scroll;
+  width: 30%;
+  scroll-snap-type-y: true;
 }
-.left text {
-  display: block;
-  height: 200rpx;
-  line-height: 200rpx;
-  border: 1rpx solid #cdcdcd;
-  text-align: center;
+.i-class{
+  margin-left: 10%;
+  margin-top: 30rpx;
+  margin-bottom: 20rpx
 }
-.i-sticky-demo {
+.scroll{
+  position: fixed;
+  top: 140rpx;
+  bottom: 0rpx;
+  right: 0rpx;
   width: 70%;
-  margin-left: 30%;
+}
+.thing{
+  font: 30rpx/1;
+  padding-left: 60rpx;
+  padding-bottom: 10rpx;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  border-bottom: 2rpx solid #cdcdcd;
+}
+.classplace{
+  background-color: #F5F5F5;
+  padding-left: 16rpx;
+  padding-bottom: 10rpx;
+  padding-top: 10rpx
 }
