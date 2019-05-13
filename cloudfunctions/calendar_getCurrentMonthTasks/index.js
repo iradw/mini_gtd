@@ -14,14 +14,7 @@ exports.main = async (event, context) => {
 	console.log(tempDate)
 	let openid = event.userInfo.openId	//用户openid
 	let tasksFromDB = await queryTasks(openid, 'calendar_list')
-	let resultSet = new Set() 
-	// await tasksFromDB.forEach( (task, index) => {
-	// 	let taskDateM = moment(task.date, 'YYYY-MM-DD')
-	// 	if(taskDateM.isSame(tempDate, 'year') && taskDateM.isSame(tempDate, 'month')){
-	// 		let day =taskDateM.get('date')
-	// 		resultSet.add(day)
-	// 	}
-	// })
+	let resultSet = new Set()
 	for(let i in tasksFromDB){
 		let taskDateM = moment(tasksFromDB[i].date, 'YYYY-MM-DD')
 		if(taskDateM.isSame(tempDate, 'year') && taskDateM.isSame(tempDate, 'month')){

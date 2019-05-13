@@ -1,6 +1,6 @@
 <i-cell-group>
 
-    <i-cell wx:for="{{ dateList }}" wx:key="{{index}}" title="{{ item.title ? item.title : item.head+'~'+item.tail }}" is-link 
+    <i-cell wx:for="{{ dateList }}" wx:key="{{index}}" title="{{ index > 1 ? item.head+'~'+item.tail : (index < 1 ? '本周' : '上周') }}" is-link 
         data-index="{{ index }}" bindtap="onClickItem">
     </i-cell>
     

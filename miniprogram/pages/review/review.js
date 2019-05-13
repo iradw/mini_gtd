@@ -19,7 +19,7 @@ Page({
 		let endDateWeek = endMoment.get('weekday')
 		let dateList = []
 		for(let i = 0; i <= weeksDiff+1; i++){
-			let Sun = null
+			let Sun = null	
 			let Mon = null
 			let dateItem = {}
 			if(i === 0){
@@ -32,12 +32,11 @@ Page({
 			dateItem['head'] = Mon
 			dateItem['tail'] = Sun
 			dateList.push(dateItem)
+			console.log(dateList)
 		}
 		if(endDateWeek === 0){	//if今天周日
 			dateList.splice(0, 1)
 		}
-		dateList[0].title = '本周'
-		dateList[1].title = '上周'
 		this.setData({
 			dateList
 		})

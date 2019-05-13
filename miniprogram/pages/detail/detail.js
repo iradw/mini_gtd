@@ -46,12 +46,13 @@ Page({
     planStartDate: 0,
     planEndDate: 0,
     calendarDate: 0,
+    listTitle: '',
     items: [
       { name: 'next_list', value: '下一步', task_key: '0' },
       { name: 'delegation_list', value: '委托',task_key: '1' },// checked: 'true', 
       { name: 'plan_list', value: '计划', task_key: '2' },
       { name: 'calendar_list', value: '日程表', task_key: '3' },
-      { name: 'someday_list', value: '愿望', task_key: '4' },
+      { name: 'someday_list', value: '将来某天', task_key: '4' },
       { name: 'reference_list', value: '参考', task_key: '5' },
     ],
     //滑动菜单
@@ -79,13 +80,25 @@ Page({
       mask: true
 
     })
-    let collectionName = "plan_list"
-    let taskIndex = 0
+    
     console.log(options.collectionName)
     console.log(options.taskIndex)
+    let listTitle = ''
+    switch (options.collectionName){
+      case 'next_list': listTitle = '下一步'
+        break
+      case 'delegation_list': listTitle = '委托'
+        break
+      case 'someday_list': listTitle = '将来某天'
+        break
+      case 'reference_list': listTitle = '参考'
+        break
+      default: '错误'
+    }
     this.setData({
       collectionName: options.collectionName,
-      taskIndex: options.taskIndex
+      taskIndex: options.taskIndex,
+      listTitle
     })
 
 
@@ -166,11 +179,10 @@ Page({
       }).then(
         (res) => {
 
+         
           console.log(res.result)
           let taskDetail = res.result
           
-
-
           this.setData({
             task: taskDetail.task,
             addDate: taskDetail.addDate,
@@ -505,6 +517,25 @@ Page({
       }).then(
         (res) => {
           console.log(res)
+          if(this.data.steps[stepIndex].isFinish){
+            wx.hideLoading()
+            wx.showToast({
+              title: '该步骤完成',
+              icon: 'success',
+              duration: 2000
+            })
+            
+          }
+          if (!this.data.steps[stepIndex].isFinish){
+            //wx.hideLoading()
+            wx.showToast({
+              title: '取消完成',
+              icon: 'success',
+              duration: 2000
+            })
+            console.log(this.data.steps[stepIndex].isFinish)
+
+          }
         },
         (err) => {
           console.log(err)
@@ -556,6 +587,15 @@ Page({
     }).then(
       (res) => {
         console.log(res)
+        wx.hideLoading()
+        wx.showToast({
+          title: '事件完成',
+          icon: 'success',
+          duration: 2000
+        })
+        wx.switchTab({
+          url: '../arrange/arrange'
+        })
       },
       (err) => {
         console.log(err)
@@ -756,6 +796,15 @@ Page({
         }).then(
           (res) => {
             console.log(res)
+            wx.hideLoading()
+            wx.showToast({
+              title: '转到成功',
+              icon: 'success',
+              duration: 2000
+            })
+            wx.switchTab({
+              url: '../arrange/arrange'
+            })
           },
           (err) => {
             console.log(err)
@@ -844,6 +893,15 @@ Page({
         }).then(
           (res) => {
             console.log(res)
+            wx.hideLoading()
+            wx.showToast({
+              title: '转到成功',
+              icon: 'success',
+              duration: 2000
+            })
+            wx.switchTab({
+              url: '../arrange/arrange'
+            })
           },
           (err) => {
             console.log(err)
@@ -895,6 +953,15 @@ Page({
         }).then(
           (res) => {
             console.log(res)
+            wx.hideLoading()
+            wx.showToast({
+              title: '转到成功',
+              icon: 'success',
+              duration: 2000
+            })
+            wx.switchTab({
+              url: '../arrange/arrange'
+            })
           },
           (err) => {
             console.log(err)

@@ -20,12 +20,12 @@
       </picker>
     </view>
   </view>
-  <view>
+  <view >
     <view class="planTitle">为你的计划添加几个小步骤吧!</view>
     <view class="box" wx:for="{{ steps }}" wx:key="index" wx:for-item="step">
       <view class="item {{step.status ? '' :'active'}}">
         <!-- <view class="planTitle">{{index+1+"." }}</view> -->
-        <input class="content" bindtouchstart="touchS" bindtouchmove="touchM" value='{{step.value }}' disabled='{{ step.disable }}' data-index='{{index}}' style="color: {{step.isFinish ? '#2d8cf0' : '#ed3f14'}}" bindblur="lostFocus" auto-focus/>
+        <input class="content" placeholder="{{index+1+'.'}}" bindtouchstart="touchS" bindtouchmove="touchM" value='{{step.value }}' disabled='{{ step.disable }}' data-index='{{index}}' style="color: {{step.isFinish ? '#2d8cf0' : '#ed3f14'}}" bindblur="lostFocus" auto-focus/>
         <view class="del-button">
           <button class="button-content" type='primary' bindtap="completeTask" data-index1='{{index}}' data-flags='1'>{{steps[index].buttonText}}</button>
           <button class="button-content" type='default' bindtap="goTask" data-index2='{{index}}'>转到</button>
@@ -40,10 +40,15 @@
     
   </view>
 </view>
+
+
+
 <view wx:if="{{collectionName == 'next_list' || collectionName == 'delegation_list' || collectionName == 'reference_list' || collectionName == 'someday_list'}}">
   <view>
+    <view class="list-title">
+    {{ listTitle }}
+    </view>
     <view class="taskName">
-     
       <input style="color: #495060" value='{{task}}' focus="{{focus}}" bindblur="titleEdit" disabled='{{ editDisable }}' />
       <view class="editImage" bindtap="taskEdit"><image src="../../images/alter.png"  ></image></view>
     </view>
@@ -80,7 +85,7 @@
           <view>  
             <radio-group class="radio-group" bindchange="radioChange">
               <label class="radio" wx:for="{{items}}" wx:key="index">
-                <radio value="{{item.name}}" bindtap="radio" data-id="{{item.task_key}}" checked="{{item.checked}}"/>{{item.value}}
+                <radio value="{{item.name}}" bindtap="radio" data-id="{{item.task_key}}" disabled="{{item.name === collectionName}}" checked="{{item.checked}}"/>{{item.value}}
               </label>
             </radio-group>
           </view>

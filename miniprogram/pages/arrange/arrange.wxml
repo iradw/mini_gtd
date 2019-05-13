@@ -1,50 +1,53 @@
-  <view class='find'>
-    <input class='input' type='text' placeholder='关键词' bindtap='jumppage'></input>
+<view class='find'>
+  <input class='input' type='text' placeholder='关键词' bindtap='jumppage'></input>
+  <button class='edit' bindtap='editClick' style="background: {{ isEdit ? '#2d8cf0' : '#f8f8f8'}}">{{isEdit?'完成':'编辑'}}</button>
+</view>
+<view class='allclass'>
+  <view wx:for="{{ iClass }}" wx:key="{{ index }}" class='i-class' bindtap='click' data-hash='{{ item.dataHash }}' data-index='{{ index }}' style="background: {{ item.active ? '#f5f5f5' : '#ffffff'}}">
+    <image src='{{ item.imageSrc }}' />{{ item.content }}
   </view>
-    <view class='allclass'>
-      <view class='i-class' bindtap='click'  data-hash='calendar'>日程表</view>
-      <view class='i-class' bindtap='click'  data-hash='nextstep'>下一步</view>
-      <view class='i-class' bindtap='click'  data-hash='plan'>计划</view>
-      <view class='i-class' bindtap='click'  data-hash='wait'>等待清单</view>
-      <view class='i-class' bindtap='click'  data-hash='wish'>愿望清单</view>
-      <view class='i-class' bindtap='click'  data-hash='reference'>参考</view>
-    </view>
-      <scroll-view class='scroll' scroll-y scroll-into-view="{{toView}}"                                             scroll-with-animation="true">
-            <view class='classplace' id='calendar'>
-                日程表
-            </view>
-            <view>
-              <view wx:for="{{calendarlist}}" wx:for-index="number" class='thing' wx:key="calendar" id='{{item.id}}' bindtap='thingjump' data-number='{{number}}'>{{item.message}}</view>
-            </view>
-            <view class='classplace' id='nextstep'>
-                下一步
-            </view>
-            <view>
-                <view wx:for="{{nextsteplist}}" class='thing' wx:key="nextstep" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}</view>
-            </view>
-            <view class='classplace' id='plan'>
-                计划
-            </view>
-            <view>
-                <view wx:for="{{planlist}}" class='thing' wx:key="plan" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}</view>
-            </view>
-            <view class='classplace' id='wait'>
-                等待清单
-            </view>
-            <view>
-                <view wx:for="{{waitlist}}" class='thing' wx:key="wait" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}</view>
-            </view>
-            <view class='classplace' id='wish'>
-                愿望清单
-            </view>
-            <view>
-                <view wx:for="{{wishlist}}" class='thing' wx:key="wish" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}</view>
-            </view>
-            <view class='classplace' id='reference'>
-                参考
-            </view>
-            <view>
-                <view wx:for="{{referencelist}}" class='thing' wx:key="reference" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>{{item.message}}                      </view>
-            </view>
-      </scroll-view>
-
+</view>
+<scroll-view class='scroll' scroll-y scroll-into-view="{{toView}}" scroll-with-animation="true">
+  <view class='classplace' id='calendar'>
+    日程表
+  </view>
+  <view>
+    <view wx:for="{{calendarlist}}" wx:for-index="number" class='thing' wx:key="calendar" id='{{item.id}}' bindtap='calendarJump' data-number='{{number}}'>
+      <checkbox class='editCheckbox ' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='calendarlist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
+  </view>
+  <view class='classplace' id='nextstep'>
+    下一步
+  </view>
+  <view>
+    <view wx:for="{{nextsteplist}}" class='thing' wx:key="nextstep" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>
+      <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='nextsteplist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
+  </view>
+  <view class='classplace' id='plan'>
+    计划
+  </view>
+  <view>
+    <view wx:for="{{planlist}}" class='thing' wx:key="plan" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>
+      <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='planlist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
+  </view>
+  <view class='classplace' id='wait'>
+    委托
+  </view>
+  <view>
+    <view wx:for="{{waitlist}}" class='thing' wx:key="wait" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>
+      <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='waitlist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
+  </view>
+  <view class='classplace' id='wish'>
+    将来某天
+  </view>
+  <view>
+    <view wx:for="{{wishlist}}" class='thing' wx:key="wish" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>
+      <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='wishlist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
+  </view>
+  <view class='classplace' id='reference'>
+    参考
+  </view>
+  <view>
+    <view wx:for="{{referencelist}}" class='thing' wx:key="reference" id='{{item.id}}' bindtap='thingjump' wx:for-index="number" data-number='{{number}}'>
+      <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='referencelist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}} </view>
+  </view>
+</scroll-view>
