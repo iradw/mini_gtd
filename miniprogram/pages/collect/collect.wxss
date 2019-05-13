@@ -66,6 +66,7 @@ page {
 .move-area .label {
   display: inline-block;
   margin-left: -70rpx;
+  font-weight: bold;
 }
 .move-area .datePicker {
   display: inline-block;

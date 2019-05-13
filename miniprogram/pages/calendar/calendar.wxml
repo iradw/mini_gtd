@@ -1,6 +1,6 @@
 <calendar  calendar-style="calendar" header-style="header" board-style="board" weeks-type="cn" active-type="rounded"  
     days-color="{{ daysColor }}" year="{{ year }}" month="{{ month }}" day="{{ day }}"
-     binddayClick="onDayClick"/>
+     binddayClick="onDayClick" bindnextMonth="onClickNext" bindprevMonth="onClickPrev" binddateChange="onDateChange"/>
      <view class="div"></view>
 <view class="calendar-card" wx:for="{{ tasks }}" wx:key="{{ index }}" >
 

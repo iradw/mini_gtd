@@ -1,40 +1,55 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 cloud.init()
-const db=cloud.database()
-const inbox=db.collection('inbox')
 
+const db = cloud.database()
 
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const wxContext = cloud.getWXContext()
-  console.log(event);
-  var date_tem=
-  db.collection('').where({
-    openid: this.data.openid,
-    
-
-  }).get().then(
-    res => {
-      console.log(res);
-      this.setData({
-        tasks_list: res.data
-      })
-      console.log('[数据库] [查询记录] 成功: ', res)
-    },
-      err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-  )
-  return {
-    tasks,
-    openid: wxContext.OPENID,
-    appid: wxContext.APPID,
-    unionid: wxContext.UNIONID,
+  let date_re=event.year+'-'+event.month+'-'+event.day
+  console.log(date_re)
+  let carlendarTasks= []
+  let car=[]
+  let openid = event.userInfo.openId	//用户openid
+  calendarTasks = await queryTasks(openid, 'calendar_list')
+  car = await filter_calendar(date_re,calendarTasks)
+	 console.log(car)      
+  return await car
+}
+async function queryTasks(openid, collectionName) {
+  let collection = db.collection(collectionName)
+  let doc = await getDoc(openid, collection)
+  let queryTasks = await doc.field({
+    'tasks': true
+  }).get()
+  let tasks = queryTasks.data.tasks
+  return tasks
+}
+async function getDoc(openid, collection) {
+  let queryId = await collection.where({ 
+    openid 
+    }).field({ 
+      '_id': true, 
+      }).get()
+  id = queryId.data[0]._id	//获取数据id
+  let doc = await collection.doc(id)
+  return doc
+}
+async function filter_calendar(date_str,tasks){
+  let newTasks = []
+  let task_c=[]
+  let str1 = 'task_c.isTaskModify'
+  let str2='task_c.isRemarkModify'			//备注是否处于修改状态
+  for (let i in tasks) {
+    if(tasks[i].date==date_str){
+      task_c=tasks[i]
+      task_c.isTaskModify=false
+      task_c.isRemarkModify=false
+      newTasks.push(task_c)
   }
+   
+    }
+  
+  return newTasks
 }

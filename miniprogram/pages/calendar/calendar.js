@@ -6,17 +6,10 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		year: 2019,
-		month: 5,
-		day: 8,
-		daysColor: [
-			{
-				month: 'current',
-				day: 9,
-				color: '#1c2438',
-				background: '#ff9900'
-			}
-		],
+		year: new Date().getFullYear(),
+		month: new Date().getMonth()+1,
+		day: new Date().getDate(),
+		daysColor: [],
 		deleteModal: false,
 		tasks: [
 			{
@@ -48,7 +41,9 @@ Page({
 	onDayClick(event){
 		// console.log(event)
 		let {year, month, day} = event.detail
-		let colorStrOfDay = 'daysColor[0].day'
+		console.log(this.data.daysColor)
+		let len = this.data.daysColor.length
+		let colorStrOfDay = `daysColor[${len-1}].day`
 		this.setData({
 			[colorStrOfDay]: day,
 			year,
@@ -56,9 +51,6 @@ Page({
 			day
 		})
 		console.log(this.data.year, this.data.month, this.data.day)
-
-	},
-	setDayColor(year, month, day){
 
 	},
 
@@ -155,13 +147,27 @@ Page({
 		// console.log(event.currentTarget.dataset.index, '完成')
 		let index = event.currentTarget.dataset.index	//点击的卡片索引
 		
-
 		let tasks = this.data.tasks
 		let {isFinish, taskId} = tasks[index]	//获取当前完成状态和点击事件的taskId
 		tasks[index].isFinish = !isFinish
 		this.setData({
 			tasks
 		})
+
+		wx.cloud.callFunction({
+			name: 'calendar_complete',
+			data: {
+				taskId
+			}
+		}).then(
+			(res) => {
+				console.log(res)
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
+
 		
 	},
 
@@ -221,6 +227,56 @@ Page({
 		})
 	},
 
+	getCurrentMonthTasks(year, month){
+
+		wx.cloud.callFunction({
+			name: 'calendar_getCurrentMonthTasks',
+			data:{
+				year,
+				month
+			}
+		}).then(
+			(res) => {
+				//console.log(res.result)
+				let days = res.result
+				let daysColor = []
+				days.forEach((day, index) => {
+					let remindDay = {
+						month: 'current',
+						day,
+						color: '#1c2438',
+						background: '#ed3f14'
+					}
+					daysColor[index] = remindDay
+				})
+				daysColor.push({
+					month: 'current',
+					day: this.data.day,
+					color: '#1c2438',
+					background: '#ff9900'
+				})
+				this.setData({
+					daysColor,
+					year,
+					month
+				})
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
+		
+	},
+
+	onDateChange(event){
+		this.getCurrentMonthTasks(event.detail.currentYear, event.detail.currentMonth)
+	},
+	onClickNext(event){
+		this.getCurrentMonthTasks(event.detail.currentYear, event.detail.currentMonth)
+	},
+	onClickPrev(event){
+		this.getCurrentMonthTasks(event.detail.currentYear, event.detail.currentMonth)
+	},
 
 	/*********************~点击添加区*********************/
 	/**
@@ -228,6 +284,7 @@ Page({
 	 */
 	onLoad: function (options) {
 
+		this.getCurrentMonthTasks(this.data.year, this.data.month)
 	},
 
 	/**
