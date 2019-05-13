@@ -77,3 +77,8 @@ page{
   padding-bottom: 10rpx;
   padding-top: 10rpx
 }
+::-webkit-scrollbar  
+{  
+    width: 10px;    
+    background-color: #ffffff;  
+}

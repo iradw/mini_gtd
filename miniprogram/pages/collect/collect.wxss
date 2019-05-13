@@ -62,6 +62,7 @@ page {
   font-size: 24rpx;
   width: 100%;
   text-align: center;
+  color: #495060;
 }
 .move-area .label {
   display: inline-block;

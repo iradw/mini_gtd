@@ -1,6 +1,6 @@
 <view>
     <input type="text" class="task" placeholder="在这里添加你想到的事情" bindinput="onTaskInput" value="{{inputTask}}" />
-    <button class="add-task" type="primary" bindtap='onClickAdd' disabled="{{inputTask===''?true:false}}">添加</button> 
+    <button class="add-task" bindtap='onClickAdd' disabled="{{inputTask===''?true:false}}" style="background:{{inputTask===''?'#bbbec4':'#2d8cf0'}}">添加</button> 
     <view class="line"></view>
     <movable-area class="move-area">
         <movable-view wx:for='{{tasks}}' wx:key='index'  x="{{item.x}}" y="{{item.y}}"
