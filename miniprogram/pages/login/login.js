@@ -27,16 +27,24 @@ Page({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
+              //console.log(res)
+              this.setData({
+                avatarUrl: res.userInfo.avatarUrl,
+                userInfo: res.userInfo
+              })
               app.globalData.avatarUrl = res.userInfo.avatarUrl
               app.globalData.userInfo = res.userInfo
               wx.switchTab({
                 url: '/pages/arrange/arrange'
               })
+              app.globalData.regular = true
             }
           })
         }
       }
     })
+
+		
   },
 
   onGetUserInfo: function(e) {
@@ -63,8 +71,9 @@ Page({
       },
       success: res => {
         //console.log('[云函数] [login] user openid: ', res.result.openid)
-        let {openid, registerDate} =  res.result
+        let {openid, registerDate, regular} =  res.result
         app.globalData.openid = openid
+        app.globalData.regular = regular
         //console.log(registerDate)
         app.globalData.registerDate = registerDate
       },

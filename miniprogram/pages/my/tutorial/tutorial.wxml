@@ -1,2 +1,15 @@
 <!--miniprogram/pages/my/tutorial/tutorial.wxml-->
-<text>使用教程</text>
+<view class='mask'>
+
+</view>
+<swiper
+  indicator-dots="true"
+  class='tutorial-swiper'
+  indicator-active-color='#2d8cf0'
+>
+    <swiper-item wx:for="{{imgUrls}}" wx:key="{{ index }}" class="tutorial-swiper-item">
+      <image src="{{item}}" class='img'/>
+      <text class='description' >{{description[index]}}</text>
+      
+    </swiper-item>
+</swiper>

@@ -61,7 +61,9 @@ Page({
       name: 'arrange_getData',
       data: {},
       success: res => {
+          // console.log(res)
           let tasksFromDB = res.result.calendar_list.data[0].tasks
+          
           let calendarlist = []
           for (let i in tasksFromDB) {
             if(tasksFromDB[i].isFinish){}
@@ -260,7 +262,18 @@ Page({
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-  onLoad:function(){
+  onLoad:function(options){
+    let regular = getApp().globalData.regular
+    if (!regular){
+      wx.navigateTo({
+        url: '/pages/my/tutorial/tutorial',
+        success: function(res) {
+          getApp().globalData.regular = !regular
+        },
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+    }
   },
 
 

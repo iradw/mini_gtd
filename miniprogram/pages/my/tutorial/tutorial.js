@@ -6,6 +6,21 @@ Page({
 	 */
 	data: {
 
+    imgUrls: [
+      'cloud://envname-d78831.656e-envname-d78831/admin/add_2.jpg',
+      'cloud://envname-d78831.656e-envname-d78831/admin/add_confirm.jpg',
+      'cloud://envname-d78831.656e-envname-d78831/admin/plan.jpg',
+      'cloud://envname-d78831.656e-envname-d78831/admin/review.jpg'
+      
+    ],
+    description: [
+      '添加你想到的任何事（可点击已添加事件展开显示)',
+      '拖动事件将它添加到目标盒子以分类',
+      '点击清单中的计划可以为该计划添加步骤（左滑对其操作',
+      '“回顾”展示了你过去的主要行动（下一步，日程表等）返回键退出教程'
+
+    ]
+
 	},
 
 	/**

@@ -2,7 +2,7 @@
 <view class="container">
 
   <view class="logo" class="logo" >
-    <text class="logo-img">LOGO</text>
+    <image class="logo-img" src="cloud://envname-d78831.656e-envname-d78831/admin/GTD_logo.PNG"/>
   </view>
 
   
