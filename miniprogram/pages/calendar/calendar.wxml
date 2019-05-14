@@ -23,7 +23,7 @@
 
     <view class="operate">
         <view class="icon icon-finish" bindtap="onClickFinish" data-index="{{ index }}">
-            <i-icon type="right" size="28" color="{{ item.isFinish ? '#5cadff' : '#80848f'}}"/>
+            <i-icon type="flag" size="28" color="{{ item.isFinish ? '#5cadff' : '#80848f'}}"/>
         </view>
         <view class="icon icon-delete" bindtap="onClickDelete" data-index="{{ index }}">
             <i-icon type="trash" size="28" color="#80848f"/>
