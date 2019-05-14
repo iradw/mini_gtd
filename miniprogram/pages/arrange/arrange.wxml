@@ -3,7 +3,7 @@
   <button class='edit' bindtap='editClick' style="background: {{ isEdit ? '#2d8cf0' : '#f8f8f8'}}">{{isEdit?'完成':'编辑'}}</button>
 </view>
 <view class='allclass'>
-  <view wx:for="{{ iClass }}" wx:key="{{ index }}" class='i-class' bindtap='click' data-hash='{{ item.dataHash }}' data-index='{{ index }}' style="background: {{ item.active ? '#f5f5f5' : '#ffffff'}}">
+  <view wx:for="{{ iClass }}" wx:key="{{ index }}" class='i-class' bindtap='click' data-hash='{{ item.dataHash }}' data-index='{{ index }}' style="border-left: {{ item.active ? '#5cadff' : '#ffffff'}} solid 10rpx;">
     <image src='{{ item.imageSrc }}' />{{ item.content }}
   </view>
 </view>

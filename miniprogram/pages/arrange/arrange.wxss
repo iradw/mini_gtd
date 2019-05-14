@@ -54,7 +54,7 @@ page{
   bottom: 0rpx;
   right: 0rpx;
   width: 70%;
-
+  overflow-x: hidden;
 }
 .editCheckbox{
   position: relative;
@@ -70,15 +70,18 @@ page{
   border-bottom: 2rpx solid #cdcdcd;
 }
 .classplace{
-  background-color: #F5F5F5;
+  /* width: 90%; */
+  background-color:#f5f5f5;
+  opacity: 0.7;
   height: 70rpx;
+  margin: 0 0 10rpx 10rpx;
+  /* border-radius: 20rpx 20rpx 100rpx 20rpx; */
   line-height: 70rpx;
   padding-left: 16rpx;
   padding-bottom: 10rpx;
-  padding-top: 10rpx
+  padding-top: 10rpx;
 }
 ::-webkit-scrollbar  
 {  
-    width: 10px;    
-    background-color: #ffffff;  
+    width: 0;     
 }

@@ -38,7 +38,7 @@ Page({
 	onDayClick(event){
 		// console.log(event)
     let { year, month, day } = event.detail
-    console.log(this.data.daysColor)
+    //console.log(this.data.daysColor)
     let len = this.data.daysColor.length
     let colorStrOfDay = `daysColor[${len - 1}].day`
     this.setData({
@@ -57,7 +57,7 @@ Page({
       }
     }).then(
       success=>{
-        console.log(success)
+        //console.log(success)
         this.setData({
           tasks:success.result
         })
@@ -163,7 +163,7 @@ Page({
 	//点击完成(电脑是回车)后this.data的数据是最新状态 可以直接连接后台
 	onRemarkBlur(event){
 	// console.log(event.target.dataset.index)
-  console.log("失去价值")
+  //console.log("失去价值")
     
 		let tasks = this.data.tasks
     let task_modify = this.data.task_modify
@@ -219,10 +219,10 @@ Page({
       }
     }).then(
       (res) => {
-        console.log(res)
+        //console.log(res)
       },
       (err) => {
-        console.log(err)
+        //console.log(err)
       }
     )
 
@@ -259,17 +259,9 @@ Page({
         year:this.data.year,
         month:this.data.month,
         day:this.data.day
-      },
-      // success: res => {
-      //   console.log(res.result)
-      //   this.setData({
-      //     tasks: res.result
-      //   })
-      // },
-      // fail: err => {
-      //   console.error
-      // }
+      }
     })
+    this.getCurrentMonthTasks(this.data.year, this.data.month)
 
 		/***********************************************************
 			taskId以获取 在此操作后台 删除事件
@@ -314,6 +306,7 @@ Page({
 		this.setData({
 			tasks
 		})
+    this.getCurrentMonthTasks(this.data.year, this.data.month)
 	},
   //获取当月有task的日期
   getCurrentMonthTasks(year, month) {
@@ -334,7 +327,7 @@ Page({
             month: 'current',
             day,
             color: '#1c2438',
-            background: '#ed3f14'
+            background: '#ff9900'
           }
           daysColor[index] = remindDay
         })
@@ -342,7 +335,7 @@ Page({
           month: 'current',
           day: this.data.day,
           color: '#1c2438',
-          background: '#ff9900'
+          background: '#ed3f14'
         })
         this.setData({
           daysColor,
@@ -391,25 +384,23 @@ Page({
        month:this.data.month,
        day:this.data.day
      })
-      wx.cloud.callFunction({
-        name:'calendar_get',
-        data:{
-          year:this.data.year,
-           month:this.data.month,
-            day:this.data.day
-        },
-        success: res => {
-          console.log(res.result)
-          this.setData({
-            tasks:res.result
-          })
-        },
-        fail: err =>{
-          console.error
-        }
-      })
-    this.getCurrentMonthTasks(this.data.year, this.data.month)
-
+    wx.cloud.callFunction({
+      name: 'calendar_get',
+      data: {
+        year: this.data.year,
+        month: this.data.month,
+        day: this.data.day
+      },
+      success: res => {
+        console.log(res.result)
+        this.setData({
+          tasks: res.result
+        })
+      },
+      fail: err => {
+        console.error
+      }
+    })
 	},
 
 	/**
@@ -435,15 +426,15 @@ Page({
 				month,
 				year
 			})
-
-		}
+    }
+    this.getCurrentMonthTasks(this.data.year, this.data.month)
+    
 	},
 
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-
 	},
 
 	/**

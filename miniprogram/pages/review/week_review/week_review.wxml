@@ -1,4 +1,4 @@
-<!-- 本周回顾(将一些列表展示) 1.收集箱, 2.日程, 3.下一步, 4.委托清单, 5.计划-->
+<!-- 本周回顾(将一些列表展示) 1.日程, 2.下一步, 3.委托清单, 4.计划-->
 <view class="date-area">
     <text class="date">{{ date.head}}~{{ date.tail}}</text>
 </view>
@@ -47,10 +47,10 @@
 <i-page current="{{ currentPage }}" total="4" bind:change="handleChange" i-class="paging-area">
     <view slot="prev">
         <i-icon type="return"></i-icon>
-        上一步
+        上一个
     </view>
     <view slot="next">
-        下一步
+        下一个
         <i-icon type="enter"></i-icon>
     </view>
 </i-page>
