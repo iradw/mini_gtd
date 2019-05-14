@@ -129,35 +129,38 @@ Page({
 	handleChange(event){
 		const type = event.detail.type
 		let currentPage = this.data.currentPage
-        if (type === 'next') {
+    if (type === 'next') {
 			currentPage++
 			this.setData({
 				currentPage,
 				listNameAction: 'fadeOutLeft',
 				listAction: 'hinge'
 			})
-			setTimeout(()=>{
+			let t1 = setTimeout(()=>{
 				this.setData({
 					currentListName: this.data.listNames[currentPage-1],
 					listNameAction: 'fadeInRight',
 					listAction: 'jackInTheBox',
 					currentList: currentPage
 				})
+				clearTimeout(t1)
 			},300)
-        } else if (type === 'prev') {
+				} 
+		else if (type === 'prev') {
 			currentPage--
 			this.setData({
 				currentPage,
 				listNameAction: 'fadeOutRight',
 				listAction: 'rotateOutUpLeft'
 			})
-			setTimeout(()=>{
+			let t2 = setTimeout(()=>{
 				this.setData({
 					currentListName: this.data.listNames[currentPage-1],
 					listNameAction: 'fadeInLeft',
 					listAction: 'jackInTheBox',
 					currentList: currentPage
 				})
+				clearTimeout(t2)
 			},300)
 		}
 		
