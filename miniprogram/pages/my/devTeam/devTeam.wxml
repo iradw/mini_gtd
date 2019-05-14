@@ -2,13 +2,13 @@
     <view slot="content">中北大学大数据学院</view>
     <view slot="content">1607084226于洋</view>
 </i-card>
-<i-card title="事件清单" extra="组员">
-    <view slot="content">中北大学大数据学院</view>
-    <view slot="content">1607084229王国强</view>
-</i-card>
 <i-card title="日程表" extra="组员">
     <view slot="content">中北大学大数据学院</view>
     <view slot="content">1607084228朱原东</view>
+</i-card>
+<i-card title="事件清单" extra="组员">
+    <view slot="content">中北大学大数据学院</view>
+    <view slot="content">1607084229王国强</view>
 </i-card>
 <i-card title="事件详细" extra="组员">
     <view slot="content">中北大学大数据学院</view>

@@ -5,8 +5,6 @@ import moment from '../../lib/moment.min.js'
 
 Page({
   data: {
-    avatarUrl: './user-unlogin.png',
-    userInfo: {},
     logged: false,
     takeSession: false,
     requestResult: ''
@@ -27,11 +25,6 @@ Page({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
-              //console.log(res)
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
-              })
               app.globalData.avatarUrl = res.userInfo.avatarUrl
               app.globalData.userInfo = res.userInfo
               wx.switchTab({
