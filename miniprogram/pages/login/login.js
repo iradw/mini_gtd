@@ -27,9 +27,11 @@ Page({
             success: res => {
               app.globalData.avatarUrl = res.userInfo.avatarUrl
               app.globalData.userInfo = res.userInfo
-              wx.switchTab({
-                url: '/pages/arrange/arrange'
+              this.setData({
+                userInfo: res.userInfo
               })
+              // console.log(res)
+              this.onLogin()
               app.globalData.regular = true
             }
           })

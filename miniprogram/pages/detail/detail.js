@@ -650,16 +650,10 @@ Page({
       }
     }).then(
       (res) => {
-        for (var i = 0; i < step.length; i++) {
-          if (i == stepIndex) {
-            step.splice(i--, 1);
+				step.splice(stepIndex, 1);
             this.setData({
               steps: step
             })
-            //return true;
-          }
-
-        }
 
         wx.hideLoading()
         wx.showToast({

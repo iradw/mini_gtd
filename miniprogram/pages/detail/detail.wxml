@@ -26,6 +26,7 @@
       <view class="item {{step.status ? '' :'active'}}">
         <!-- <view class="planTitle">{{index+1+"." }}</view> -->
         <input class="content" placeholder="{{index+1+'.'}}" bindtouchstart="touchS" bindtouchmove="touchM" value='{{step.value }}' disabled='{{ step.disable }}' data-index='{{index}}' style="color: {{step.isFinish ? '#2d8cf0' : '#ed3f14'}}" bindblur="lostFocus" auto-focus/>
+        <image src="../../images/double_left.png" class="icon-double-left"/>
         <view class="del-button">
           <button class="button-content" type='primary' bindtap="completeTask" data-index1='{{index}}' data-flags='1'>{{steps[index].buttonText}}</button>
           <button class="button-content" type='default' bindtap="goTask" data-index2='{{index}}'>转到</button>
@@ -36,7 +37,7 @@
     </view>
     <view style=' height: 50rpx'></view>
   
-    <button type='primary' bindtap="addTask">添加</button>
+    <button style='background: #2d8cf0' bindtap="addTask">添加</button>
     
   </view>
 </view>

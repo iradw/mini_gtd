@@ -57,6 +57,7 @@ Page({
 	 */
 	onLoad: function (options) {
 		let registerDate = app.globalData.registerDate
+		console.log(registerDate)
 		this.calculateDate(registerDate, utils.formatNow())
 	},
 
