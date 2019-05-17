@@ -1,6 +1,6 @@
 <!--pages/find/find.wxml-->
 <view class='top'>
-<input class='input' type='text' placeholder='关键词' confirm-type='search' bindinput='getvalue'></input>
+<input class='input' type='text' placeholder='关键词' confirm-type='search' bindinput='getvalue' focus="{{focus}}"></input>
 <button class='search' bindtap='searchclick'>搜索</button>
 </view>
 <view class='allhistory'>搜索记录：</view>

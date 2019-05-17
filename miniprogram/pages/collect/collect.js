@@ -382,6 +382,9 @@ Page({
 			pickedPlanEndDate: event.detail.value
 		})
 	},
+	onLongPressBox(event){
+		console.log(event.target.dataset.boxindex)
+	},
 
 	//从数据库获取数据
 	getData(){

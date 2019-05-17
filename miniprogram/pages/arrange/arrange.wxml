@@ -1,21 +1,24 @@
 <view class='find'>
   <input class='input' type='text' placeholder='关键词' bindtap='jumppage'></input>
-  <button class='edit' bindtap='editClick' style="background: {{ isEdit ? '#2d8cf0' : '#f8f8f8'}}">{{isEdit?'完成':'编辑'}}</button>
+  <button class='edit' bindtap='editClick' style="background: {{ isEdit ? '#5cadff' : '#2b85e4'}}">{{isEdit?'完成':'编辑'}}</button>
 </view>
 <view class='allclass'>
-  <view wx:for="{{ iClass }}" wx:key="{{ index }}" class='i-class' bindtap='click' data-hash='{{ item.dataHash }}' data-index='{{ index }}' style="border-left: {{ item.active ? '#5cadff' : '#ffffff'}} solid 10rpx;">
-    <image src='{{ item.imageSrc }}' />{{ item.content }}
+  <view wx:for="{{ iClass }}" wx:key="{{ index }}" class="i-class {{item.active ? 'i-class-active': ''}}" bindtap='click' data-hash='{{ item.dataHash }}' data-index='{{ index }}'>
+    <image src='{{ item.active ? item.imageSrc+"_on.png" : item.imageSrc+".png" }}' />{{ item.content }}
   </view>
 </view>
 <scroll-view class='scroll' scroll-y scroll-into-view="{{toView}}" scroll-with-animation="true">
   <view class='classplace' id='calendar'>
+    <view class="tri"></view>
     日程表
   </view>
+  
   <view>
     <view wx:for="{{calendarlist}}" wx:for-index="number" class='thing' wx:key="calendar" id='{{item.id}}' bindtap='calendarJump' data-number='{{number}}'>
       <checkbox class='editCheckbox ' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='calendarlist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
   </view>
   <view class='classplace' id='nextstep'>
+    <view class="tri"></view>
     下一步
   </view>
   <view>
@@ -23,6 +26,7 @@
       <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='nextsteplist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
   </view>
   <view class='classplace' id='plan'>
+    <view class="tri"></view>
     计划
   </view>
   <view>
@@ -30,6 +34,7 @@
       <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='planlist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
   </view>
   <view class='classplace' id='wait'>
+    <view class="tri"></view>
     委托
   </view>
   <view>
@@ -37,6 +42,7 @@
       <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='waitlist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
   </view>
   <view class='classplace' id='wish'>
+    <view class="tri"></view>
     将来某天
   </view>
   <view>
@@ -44,6 +50,7 @@
       <checkbox class='editCheckbox' bindtap='checkClick' hidden='{{editClick}}' data-number='{{number}}' id='wishlist' checked='{{item.checked}}' data-checked='{{item.checked}}'></checkbox>{{item.message}}</view>
   </view>
   <view class='classplace' id='reference'>
+    <view class="tri"></view>
     参考
   </view>
   <view>

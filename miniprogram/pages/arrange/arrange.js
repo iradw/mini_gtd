@@ -18,37 +18,37 @@ Page({
     iClass: [
       {
         dataHash: 'calendar',
-        imageSrc: '../../images/arrange_calendar.png',
+        imageSrc: '../../images/arrange_calendar',
         content: '日程表',
         active: true
       },
       {
         dataHash: 'nextstep',
-        imageSrc: '../../images/arrange_next.png',
+        imageSrc: '../../images/arrange_next',
         content: '下一步',
         active: false
       },
       {
         dataHash: 'plan',
-        imageSrc: '../../images/arrange_plan.png',
+        imageSrc: '../../images/arrange_plan',
         content: '计划',
         active: false
       },
       {
         dataHash: 'wait',
-        imageSrc: '../../images/arrange_delegation.png',
+        imageSrc: '../../images/arrange_delegation',
         content: '委托',
         active: false
       },
       {
         dataHash: 'wish',
-        imageSrc: '../../images/arrange_someday.png',
+        imageSrc: '../../images/arrange_someday',
         content: '将来某天',
         active: false
       },
       {
         dataHash: 'reference',
-        imageSrc: '../../images/arrange_reference.png',
+        imageSrc: '../../images/arrange_reference',
         content: '参考',
         active: false
       }

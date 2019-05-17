@@ -19,7 +19,7 @@
         <view class="line movable-line"></view>
 
         <movable-view class="task-boxes" wx:for="{{boxes}}" wx:key="index" x='{{item.x}}' y='{{item.y}}'>
-            <image src="{{item.boxSrc}}" mode="scaleToFill"/>
+            <image src="{{item.boxSrc}}" mode="scaleToFill" bindlongpress="onLongPressBox" data-boxIndex="{{ index }}"/>
             <text class="list-name" id="{{item.id}}">{{item.text}}</text>
         </movable-view>
         

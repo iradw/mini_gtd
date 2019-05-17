@@ -6,6 +6,7 @@ page{
   background-color:#ffffff;
   width: 100%;
   height: 140rpx;
+  border-bottom: 2rpx solid #2d8cf0;
 }
 .input{
     padding-left: 10px;
@@ -28,33 +29,37 @@ page{
 .allclass{
   background-color:#ffffff;
   position: fixed;
-  top: 140rpx;
+  top: 142rpx;
   bottom: 0rpx;
   left: 0rpx;
   height: 100%;
-  width: 30%;
+  width: 25%;
   scroll-snap-type-y: true;
-  
 }
 .i-class{
   height:110rpx;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   line-height:110rpx;
-  font-size: 33rpx;
+  font-size: 28rpx;
 }
 .i-class image{
   height: 50rpx;
-  width: 23%;
+  width: 50rpx;
   vertical-align: middle;
-  margin: 0 18rpx 0 6rpx;
+  margin: 0 6rpx;
+}
+.i-class-active{
+  border-left: #5cadff solid 8rpx;
+  color: #5cadff;
 }
 .scroll{
   position: fixed;
-  top: 140rpx;
+  top: 142rpx;
   bottom: 0rpx;
   right: 0rpx;
-  width: 70%;
+  width: 75%;
   overflow-x: hidden;
+  border-left: 2rpx rgba(92, 173, 255, 0.8) solid;
 }
 .editCheckbox{
   position: relative;
@@ -62,24 +67,35 @@ page{
   right: 15rpx;
 }
 .thing{
-  font: 30rpx/1;
+  font-size: 34rpx;
   padding-left: 60rpx;
   padding-bottom: 10rpx;
   margin-top: 30rpx;
   margin-bottom: 30rpx;
   border-bottom: 2rpx solid #cdcdcd;
+  color: #495060;
 }
 .classplace{
-  /* width: 90%; */
-  background-color:#f5f5f5;
-  opacity: 0.7;
+  color: #1c2438;
+  position: relative;
+  width: 60%;
+  background-color:rgba(92, 173, 255, 0.8);
   height: 70rpx;
-  margin: 0 0 10rpx 10rpx;
-  /* border-radius: 20rpx 20rpx 100rpx 20rpx; */
+  margin: 0 0 10rpx 0;
   line-height: 70rpx;
   padding-left: 16rpx;
   padding-bottom: 10rpx;
   padding-top: 10rpx;
+}
+.tri{
+  position: absolute;
+  top: 0;
+  right: -90rpx;
+  width: 0;
+  height: 0;
+  border-color: transparent rgba(92, 173, 255, 0.8);
+  border-width: 0 0 90rpx 90rpx;
+  border-style: solid; 
 }
 ::-webkit-scrollbar  
 {  

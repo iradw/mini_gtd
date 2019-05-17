@@ -13,7 +13,8 @@ Page({
     allthings:[],
     //得到的符合搜索的库
     resultlist:[{result:'无结果'}],
-    value:''//搜索input的值
+    value:'',//搜索input的值
+    focus: false
   },
 
   getData() {
@@ -43,7 +44,8 @@ Page({
           })
         }
         this.setData({
-          allthings
+          allthings,
+          focus: true
         })
         wx.hideLoading()
 
@@ -99,6 +101,7 @@ getHistorylist(){
   onShow: function () {
     this.getData()
     this.getHistorylist()
+
   },
 
   /**
