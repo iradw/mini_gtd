@@ -1,2 +1,9 @@
 <!--components/bubble.wxml-->
-<text>components/bubble.wxml</text>
+<view class="body">
+    <slot name="bubbleContent"></slot>
+    <view class="tri" style="left: {{ triLeft }}">
+        <view class="mask-tri"></view>
+    </view>
+    
+</view>
+

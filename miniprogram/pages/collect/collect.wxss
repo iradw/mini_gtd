@@ -75,3 +75,13 @@ page {
   padding: 5rpx;
   margin-left: 20rpx;
 }
+.bubble {
+  position: absolute;
+  left: 50%;
+  top: 605rpx;
+  transform: translate(-50%, -50%);
+}
+.bubble .bubble-content {
+  font-size: 30rpx;
+  line-height: 1.6;
+}

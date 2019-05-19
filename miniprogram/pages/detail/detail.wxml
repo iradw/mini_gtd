@@ -146,4 +146,8 @@
 <i-modal title="删除确认" confirm-text="删除" cancel-text="取消" 
             bind:ok="onDeleteConfirm" bind:cancel="onDeleteCancel" visible="{{ showDeleteDialog }}">
 </i-modal>
+<i-modal title="确认框" confirm-text="确认完成" cancel-text="取消" 
+            bind:ok="onCompleteConfirm" bind:cancel="onCompleteCancel" visible="{{ showCompleteDialog }}">
+            <text>您已完成所添加的所有步骤，是否完成这个计划</text>
+</i-modal>
 

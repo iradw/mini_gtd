@@ -1,0 +1,32 @@
+@primary-color: rgb(92, 173, 255);
+.body{
+    width: 600rpx;
+    height: 200rpx;
+    border: 8rpx @primary-color solid;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+    color: @primary-color;
+    padding: 10rpx;
+    .tri{
+        width: 0rpx;
+        height: 0rpx;
+        border-style: solid;
+        border-width: 180rpx 50rpx 0 50rpx;
+        border-color: @primary-color transparent transparent;
+        position: absolute;
+        top: 185rpx;
+        left: 200rpx; 
+        .mask-tri{
+            width: 0rpx;
+            height: 0rpx;
+            border-style: solid;
+            border-width: 170rpx 40rpx 0 40rpx;
+            border-color: #ffffff transparent transparent;
+            position: absolute;
+            top: -184rpx;
+            left: -40rpx; 
+        }
+    }
+    
+}

@@ -68,13 +68,23 @@ Page({
 		isShowPlanPicker: false,//是否弹出计划对话框
 		pickedDate: 0,		//选择的日程时间
 		pickedPlanStartDate: 0,//选择的计划开始时间
-		pickedPlanEndDate: 0	//选择的计划结束时间
+		pickedPlanEndDate: 0,	//选择的计划结束时间
+		showBubble: false,	//是否显示气泡
+		bubbleOption: {},	//气泡的相关参数
+		bubbleContent:''	//气泡中的文字
 	},
 	otherData: {
 		selectedBox: null,	//标签选中的盒子索引
 		selectedTagToBox: null,//放在盒子上的标签的索引
 		deleteTaskIndex: null,//要删除的标签的索引,
-		openId: ''
+		openId: '',
+		bubbleContents:['这件事需要你去做,而且有明确的执行日期,把标签拖到盒子上将事件加入日程表', 
+						'你现在就要做这件事,但是没有明确的时间,把标签拖到盒子上将事件加入下一步列表',
+						'交给别人做的事,虽无需自行动手,但仍为分内事,必要时或许要催促,把标签拖到盒子上将事件加入委托列表',
+						'你的一项计划,有开始结束日期,可分多步执行,把标签拖到盒子上将事件加入计划列表,加入后可在"清单"中点击进入计划详情',
+						'你可能会做的事,把标签拖到盒子上将事件加入将来某天的列表',
+						'你不必去做的事情, 但是有一定的参考价值,把标签拖到盒子上将事件加入参考列表'
+					]
 	},
 	onTaskInput(event){	//输入事件
 		//console.log(event.detail.value)
@@ -383,7 +393,26 @@ Page({
 		})
 	},
 	onLongPressBox(event){
-		console.log(event.target.dataset.boxindex)
+		
+		let longTapBoxIndex = event.target.dataset.boxindex
+		let bubbleOptions = [
+			{bubbleTop: '605rpx', triLeft: '50rpx'},
+			{bubbleTop: '605rpx', triLeft: '250rpx'},
+			{bubbleTop: '605rpx', triLeft: '460rpx'},
+			{bubbleTop: '755rpx', triLeft: '50rpx'},
+			{bubbleTop: '755rpx', triLeft: '250rpx'},
+			{bubbleTop: '755rpx', triLeft: '460rpx'}
+		]
+		this.setData({
+			showBubble: true,
+			bubbleOption: bubbleOptions[longTapBoxIndex],
+			bubbleContent: this.otherData.bubbleContents[longTapBoxIndex]
+		})
+	},
+	onTouchBoxEnd(){
+		this.setData({
+			showBubble: false
+		})
 	},
 
 	//从数据库获取数据

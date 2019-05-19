@@ -80,21 +80,19 @@ page{
   position: relative;
   width: 60%;
   background-color:rgba(92, 173, 255, 0.8);
-  height: 70rpx;
+  height: 45px;
   margin: 0 0 10rpx 0;
-  line-height: 70rpx;
+  line-height: 45px;
   padding-left: 16rpx;
-  padding-bottom: 10rpx;
-  padding-top: 10rpx;
 }
 .tri{
   position: absolute;
   top: 0;
-  right: -90rpx;
+  right: -47px;
   width: 0;
   height: 0;
   border-color: transparent rgba(92, 173, 255, 0.8);
-  border-width: 0 0 90rpx 90rpx;
+  border-width: 0 0 45px 47px;
   border-style: solid; 
 }
 ::-webkit-scrollbar  

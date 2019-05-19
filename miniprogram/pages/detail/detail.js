@@ -18,6 +18,7 @@ Page({
     endDate: '2019-4-29',
     addDate: 0,
     showDeleteDialog: false,
+    showCompleteDialog: false,
     steps: [
       // {
       //   value: 'value1',
@@ -483,6 +484,7 @@ Page({
     let stepIndex = e.currentTarget.dataset.index1;
     let flag = this.data.steps[stepIndex].flags
     let step = this.data.steps
+    let allComplete = 0
     var status = "steps[" + stepIndex + "].status";
     var isFinish = "steps[" + stepIndex + "].isFinish";
     var flags = "steps[" + stepIndex + "].flags";
@@ -517,25 +519,34 @@ Page({
       }).then(
         (res) => {
           console.log(res)
-          if(this.data.steps[stepIndex].isFinish){
-            wx.hideLoading()
-            wx.showToast({
-              title: '该步骤完成',
-              icon: 'success',
-              duration: 2000
+          
+         
+          for (let i = 0; i < step.length; i++) {
+            if (step[i].isFinish) {
+              allComplete = allComplete + 1
+
+            }
+          }
+          if (allComplete === step.length) {
+            this.setData({
+              showCompleteDialog: true
+
             })
+          }
+          else{
+            if (this.data.steps[stepIndex].isFinish) {
+
+              wx.hideLoading()
+              wx.showToast({
+                title: '该步骤完成',
+                icon: 'success',
+                duration: 2000
+              })
+
+            }
             
           }
-          if (!this.data.steps[stepIndex].isFinish){
-            //wx.hideLoading()
-            wx.showToast({
-              title: '取消完成',
-              icon: 'success',
-              duration: 2000
-            })
-            console.log(this.data.steps[stepIndex].isFinish)
-
-          }
+          
         },
         (err) => {
           console.log(err)
@@ -565,6 +576,12 @@ Page({
       }).then(
         (res) => {
           console.log(res)
+          wx.hideLoading()
+          wx.showToast({
+            title: '取消完成',
+            icon: 'success',
+            duration: 2000
+          })
         },
         (err) => {
           console.log(err)
@@ -572,6 +589,46 @@ Page({
       )
     }
 
+  },
+  onCompleteConfirm() {
+    wx.cloud.callFunction({
+      name: 'detail_alter',
+      data: {
+        eventFlags: "planComplete",
+        collectionName: this.data.collectionName,
+        taskIndex: this.data.taskIndex,
+        
+
+      }
+    }).then(
+      (res) => {
+        console.log(res)
+        
+          wx.hideLoading()
+          wx.showToast({
+            title: '该计划完成',
+            icon: 'success',
+            duration: 2000
+          })
+        wx.switchTab({
+          url: '../arrange/arrange'
+        })
+
+        
+
+
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
+
+  },
+  onCompleteCancel(){
+    this.setData({
+      showCompleteDialog: false
+
+    })
   },
   otherComplete(){
     //调用云函数 改变任务的完成情况

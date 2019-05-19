@@ -52,6 +52,7 @@ page{
     .task-boxes{
         width: 100rpx;
         height: 100rpx;
+        // position: relative;
         image{
             width: 100%;
             height: 100%;
@@ -65,6 +66,7 @@ page{
             text-align: center;
             color: #495060;
         }
+        
     }
     .label{
         display: inline-block;
@@ -76,6 +78,16 @@ page{
         border-bottom: 1rpx solid #cdcdcd;
         padding: 5rpx;
         margin-left: 20rpx;
+    }
+}
+.bubble{
+    position: absolute;
+    left: 50%;
+    top: 605rpx;
+    transform: translate(-50%, -50%);
+    .bubble-content{
+        font-size: 30rpx;
+        line-height: 1.6;
     }
 }
 

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "i-modal": "../../lib/iview/modal/index",
-    "i-icon": "../../lib/iview/icon/index"
+    "i-icon": "../../lib/iview/icon/index",
+    "bubble": "../../components/bubble"
   }
 }

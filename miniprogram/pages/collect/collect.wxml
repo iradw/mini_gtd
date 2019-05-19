@@ -19,8 +19,10 @@
         <view class="line movable-line"></view>
 
         <movable-view class="task-boxes" wx:for="{{boxes}}" wx:key="index" x='{{item.x}}' y='{{item.y}}'>
-            <image src="{{item.boxSrc}}" mode="scaleToFill" bindlongpress="onLongPressBox" data-boxIndex="{{ index }}"/>
+            <image src="{{item.boxSrc}}" mode="scaleToFill" bindlongpress="onLongPressBox" bindtouchend="onTouchBoxEnd" data-boxIndex="{{ index }}"/>
             <text class="list-name" id="{{item.id}}">{{item.text}}</text>
+            
+            
         </movable-view>
         
         <i-modal title="确认框" confirm-text="添加" cancel-text="取消" 
@@ -49,4 +51,9 @@
             bind:ok="onDeleteConfirm" bind:cancel="onDeleteCancel" visible="{{ showDeleteDialog }}">
         </i-modal>
     </movable-area>
+</view>
+<view class="bubble animated {{ showBubble ? 'fadeIn' : 'fadeOut' }}" hidden="{{ !showBubble }}" style="top: {{ bubbleOption.bubbleTop }};" >
+    <bubble triLeft="{{ bubbleOption.triLeft }}">
+        <view slot="bubbleContent" class="bubble-content">{{ bubbleContent}}</view>
+    </bubble>
 </view>
