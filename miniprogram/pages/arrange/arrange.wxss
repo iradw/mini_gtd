@@ -18,6 +18,7 @@ page{
     border: 2rpx solid lightslategray;
     border-radius: 50rpx}
 .edit{
+  color: #ffffff;
   position: fixed;
   right: 15rpx;
   top: 45rpx;
@@ -76,10 +77,12 @@ page{
   color: #495060;
 }
 .classplace{
-  color: #1c2438;
+  /* color: #1c2438; */
+  color: #ffffff;
   position: relative;
   width: 60%;
-  background-color:rgba(92, 173, 255, 0.8);
+  /* background-color:rgba(92, 173, 255, 0.8); */
+  background-color:rgb(92, 173, 255);
   height: 45px;
   margin: 0 0 10rpx 0;
   line-height: 45px;
@@ -91,7 +94,8 @@ page{
   right: -47px;
   width: 0;
   height: 0;
-  border-color: transparent rgba(92, 173, 255, 0.8);
+  /* border-color: transparent rgba(92, 173, 255, 0.8); */
+  border-color: transparent rgb(92, 173, 255);
   border-width: 0 0 45px 47px;
   border-style: solid; 
 }
