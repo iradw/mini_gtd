@@ -1,6 +1,4 @@
-<i-notice-bar icon="systemprompt" loop>
-    目前日程表界面响应较慢,可能会出现输入文字后没有保存等问题,请输入完成并在输入框失去焦点后等待3秒左右,正在玩命优化...请见谅!
-</i-notice-bar>
+
 <calendar  calendar-style="calendar" header-style="header" board-style="board" weeks-type="cn" active-type="rounded"  
     days-color="{{ daysColor }}" year="{{ year }}" month="{{ month }}" day="{{ day }}"
      binddayClick="onDayClick" bindnextMonth="onClickNext" bindprevMonth="onClickPrev" binddateChange="onDateChange"

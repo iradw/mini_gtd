@@ -232,19 +232,18 @@ page{
 /* ///////////////////////// */
 
 .img-plus-style {
-  height: 100rpx;
-  width: 100rpx;
+  height: 50px;
+  width: 50px;
   position: absolute;
   bottom: 250rpx;
   right: 100rpx;
   z-index: 100;
-  border: 6rpx #2d8cf0 solid;
   border-radius: 50%;
 }
  
 .img-style {
-  height: 100rpx;
-  width: 100rpx;
+  height: 50px;
+  width: 50px;
   position: absolute;
   bottom: 250rpx;
   right: 100rpx;

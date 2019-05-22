@@ -61,15 +61,15 @@
     </view>
   </view>
   <!-- <view class="groupMenu">
-    <!-- handleMenu为父组件和自定义组件之间通信的桥梁 -->
-    <!-- <menu class='menu' menu_list='{{menu_list}}' bind:handleMenu='handleMenu' /> -->
-    <!-- <text class='text'>HOME</text> -->
-  <!-- </view> --> 
+     handleMenu为父组件和自定义组件之间通信的桥梁 
+    <menu class='menu' menu_list='{{menu_list}}' bind:handleMenu='handleMenu' /> 
+    <text class='text'>HOME</text> 
+  </view> --> 
   <view>
-  <image src="../../images/complete.png" class="img-style" animation="{{animCollect}}" bindtap="otherComplete"></image>
-  <image src="../../images/add.png" class="img-style" animation="{{animTranspond}}" bindtap="goTask"></image>
+   <image src="../../images/detail_complete.png" class="img-style" animation="{{animCollect}}" bindtap="otherComplete"></image>
+  <image src="../../images/detail_trans.png" class="img-style" animation="{{animTranspond}}" bindtap="goTask"></image>
   <image src="../../images/delete.png" class="img-style" animation="{{animInput}}" bindtap="otherDelete"></image>
-  <image src="../../images/collect_on.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image>
+  <image src="../../images/detail_operate.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image>
 </view>
 
 

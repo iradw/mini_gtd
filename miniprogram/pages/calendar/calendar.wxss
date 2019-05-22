@@ -31,7 +31,7 @@
 .calendar-card {
   position: relative;
   width: 90%;
-  margin: 0 auto 10rpx;
+  margin: 0 auto;
   border: #cdcdcd 2rpx solid;
   border-radius: 30rpx;
   padding: 20rpx;

@@ -7,20 +7,21 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  let date_re = event.year + '-' + event.month + '-' + event.day
-  
+  let month_s = event.month < 10 ? '0' + event.month : event.month
+  let day_s = event.day < 10 ? '0' + event.day : event.day
+  let date_re = event.year + '-' + month_s + '-' + day_s
+  //console.log(date_re)
   let carlendarTasks = []
   let car = []
 
   let openid = event.userInfo.openId	//用户openid
 
-  calendarTasks = await queryTasks(openid, 'calendar_list',event.tasks)
-  console.log(calendarTasks)
+  calendarTasks = await queryTasks(openid, 'calendar_list', event.taskId,event.remark_input,event.task_input)
   car = await filter_calendar(date_re, calendarTasks)
-  
+  //console.log(car)
   return await car
 }
-async function queryTasks(openid, collectionName,tasks_p) {
+async function queryTasks(openid, collectionName, taskId,remark,task) {
   let c_tasks = []
   let collection = db.collection(collectionName)
   let doc = await getDoc(openid, collection)
@@ -30,36 +31,21 @@ async function queryTasks(openid, collectionName,tasks_p) {
   let tasks = queryTasks.data.tasks
   console.log(tasks)
   for (let i in tasks) {
-    if (tasks[i].remark !== tasks_p[i].remark) {
-      let task_ch = tasks[i]
-
-      task_ch.remark = tasks_p[i].remark
-
-      
-      if (tasks[i].task !== tasks_p[i].task){
-        task_ch.task=tasks_p[i].task
-        c_tasks.push(task_ch)
-      }else{
-        c_tasks.push(task_ch)
-      }
-    }else{
-      if (tasks[i].task !== tasks_p[i].task){
-          let task_cj=tasks[i]
-          task_cj.task=tasks_p[i].task
-          c_tasks.push(task_ch)
-      }else{
+    if (tasks[i].taskId !== taskId) {//更改
       c_tasks.push(tasks[i])
-      }
-
+    }else{
+      let task_ch=tasks[i]
+      task_ch.remark=remark
+      task_ch.task=task
+      c_tasks.push(task_ch)
     }
   }
-
-
+  console.log(c_tasks)
   return await doc.update({
-      data: {
-        tasks: c_tasks
-      },
-    })
+    data: {
+      tasks: c_tasks
+    },
+  })
 
 }
 async function getDoc(openid, collection) {
@@ -91,3 +77,4 @@ async function filter_calendar(date_str, tasks) {
 
   return newTasks
 }
+

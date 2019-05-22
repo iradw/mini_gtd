@@ -83,15 +83,12 @@ Page({
 	onTaskInput(event){
 		//console.log(event.detail)
 		let tasks = this.data.tasks
-    let id_modify=this.data.id_modify
     
 		tasks[event.target.dataset.index].task = event.detail.value
     //console.log(tasks[event.target.dataset.index].taskId)
-    id_modify = tasks[event.target.dataset.index].taskId
 		//让输入框获取焦点
 		this.setData({
-			tasks,
-      id_modify
+			tasks
 		})
 	},
 
@@ -100,29 +97,32 @@ Page({
 	onTaskBlur(event){
 		// console.log(event.target.dataset.index)
 		let tasks = this.data.tasks
-    let task_modify = this.data.task_modify
-    let remark_modify = this.data.remark_modify
 		//让输入框获取禁用并失去焦点
 		tasks[event.target.dataset.index].isTaskModify = false
-    task_modify = tasks[event.target.dataset.index].task
-    remark_modify = tasks[event.target.dataset.index].remark
-		this.setData({
-			tasks,
-      task_modify,
-      remark_modify
-		})
+    let task_modify = tasks[event.target.dataset.index].task
+    let remark_modify = tasks[event.target.dataset.index].remark
+    let taskId = tasks[event.target.dataset.index].taskId
     wx.cloud.callFunction({
-      name: "calendar_modify",
+      name: "calendar_modifyplus",
       data: {
-        taskId:this.data.id_modify,
+        taskId,
         year: this.data.year,
         month: this.data.month,
         day: this.data.day,
-        remark_input:this.data.remark_modify,
-        task_input:this.data.task_modify
+        remark_input: remark_modify,
+        task_input: task_modify
+      } 
+    }).then(
+      (res) => {
+        this.setData({
+          tasks
+        })
+        // console.log(res)
+      },
+      (err) => {
+        console.log(err)
       }
-      
-    })
+    )
 		/*****************************
 			在此操作后台 修改事件内容
 		*****************************/
@@ -149,13 +149,10 @@ Page({
 	onRemarkInput(event){
 		// console.log(event.detail.value)
 		let tasks = this.data.tasks
-    let id_modify = this.data.id_modify
 		tasks[event.target.dataset.index].remark = event.detail.value
-    id_modify = tasks[event.target.dataset.index].taskId
 		//让输入框获取焦点
 		this.setData({
-			tasks,
-      id_modify
+			tasks
 		})
 	},
 
@@ -166,29 +163,32 @@ Page({
   //console.log("失去价值")
     
 		let tasks = this.data.tasks
-    let task_modify = this.data.task_modify
-    let remark_modify = this.data.remark_modify
 		//让输入框获取禁用并失去焦点
 		tasks[event.target.dataset.index].isRemarkModify = false
-    task_modify = tasks[event.target.dataset.index].task
-    remark_modify = tasks[event.target.dataset.index].remark
-    this.setData({
-      tasks,
-      task_modify,
-      remark_modify
-    })
+    let task_modify = tasks[event.target.dataset.index].task
+    let remark_modify = tasks[event.target.dataset.index].remark
+    let taskId = tasks[event.target.dataset.index].taskId
 		console.log(this.data.tasks)
     wx.cloud.callFunction({
-      name: "calendar_modify",
+      name: "calendar_modifyplus",
       data: {
-        taskId: this.data.id_modify,
+        taskId,
         year: this.data.year,
         month: this.data.month,
         day: this.data.day,
-        remark_input: this.data.remark_modify,
-        task_input: this.data.task_modify
+        remark_input: remark_modify,  //this.data
+        task_input: task_modify       //this.data
       }
-    })
+    }).then(
+      (res) => {
+        this.setData({
+          tasks
+        })
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
 		/***********************************************************
 			在此操作后台 修改备注内容
       
@@ -301,12 +301,20 @@ Page({
         month:m,
         day:d,
       }
-    })
-		tasks.push(newTask)
-		this.setData({
-			tasks
-		})
-    this.getCurrentMonthTasks(this.data.year, this.data.month)
+    }).then(
+      (res) => {
+        tasks.push(newTask)
+        this.setData({
+          tasks
+        })
+        this.getCurrentMonthTasks(this.data.year, this.data.month)
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
+		
+    
 	},
   //获取当月有task的日期
   getCurrentMonthTasks(year, month) {
@@ -370,7 +378,6 @@ Page({
 	 */
 	onLoad: function (options) {
     let now_s=utils.formatNow()
-    let timestamp = Date.parse(new Date())
     // let date = new Date(timestamp)         
     // let Y =date.getFullYear();    //年      
     // let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)   //月    
@@ -425,7 +432,8 @@ Page({
 				day,
 				month,
 				year
-			})
+      })
+      getApp().globalData.calendarJumpData = null
     }
     this.getCurrentMonthTasks(this.data.year, this.data.month)
     

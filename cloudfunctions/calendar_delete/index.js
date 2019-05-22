@@ -7,9 +7,11 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  let date_re = event.year + '-' + event.month + '-' + event.day
+  let month_s = event.month < 10 ? '0' + event.month : event.month
+  let day_s = event.day < 10 ? '0' + event.day : event.day
+  let date_re = event.year + '-' + month_s + '-' + day_s
   //console.log(date_re)
-  let carlendarTasks = []       //这里名字错了
+  let carlendarTasks = []
   let car = []
 
   let openid = event.userInfo.openId	//用户openid
